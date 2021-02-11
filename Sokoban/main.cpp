@@ -1,9 +1,16 @@
-#include <SDL.h>
-#undef main
+#include "Application.h"
+#include <iostream>
 
-int main()
+int main(int argc, char* argv[])
 {
-	SDL_Init(SDL_INIT_EVERYTHING);
+	Application* App = new Application();
+	App->Run();
 
-	SDL_Quit();
+	delete App;
+	App = nullptr;
+
+	std::cout << "Press any key to continue" << std::endl;
+	int c = getchar();
+
+	return 0;
 }
