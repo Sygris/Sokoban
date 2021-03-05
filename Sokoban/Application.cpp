@@ -14,7 +14,7 @@ void Application::Run()
 
 	if (m_renderer)
 	{
-		Uint8 r = 255, g = 0, b = 0, a = 255;
+		Uint8 r = 0, g = 0, b = 0, a = 255;
 
 		m_renderer->SetDisplayColour(r, g, b, a);
 		m_renderer->Update();

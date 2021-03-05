@@ -1,5 +1,10 @@
 #pragma once
 
+#if _DEBUG
+#include "MemoryManager.h"
+#endif // DEBUG
+
+
 #include "Renderer.h"
 
 class Application
