@@ -1,9 +1,8 @@
 #pragma once
 
 #if _DEBUG
-#include "MemoryManager.h"
+#include "Util/MemoryManager.h"
 #endif // DEBUG
-
 
 #include "Renderer.h"
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-static int totalHeapMemory = 0;
+static size_t totalHeapMemory = 0;
 
 #pragma region Operator new overload
 inline void* operator new(size_t size, const char* filename, int line)
