@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -168,13 +168,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="States\PauseState.cpp" />
+    <ClCompile Include="States\PlayState.cpp" />
+    <ClCompile Include="States\GameState.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="States\MenuState.cpp" />
     <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="MemoryManager.h" />
+    <ClInclude Include="States\PauseState.h" />
+    <ClInclude Include="States\PlayState.h" />
+    <ClInclude Include="States\GameState.h" />
+    <ClInclude Include="States\MenuState.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Util\MemoryManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

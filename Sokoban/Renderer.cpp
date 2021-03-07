@@ -6,7 +6,7 @@ Renderer::Renderer()
 	SDL_Init(SDL_INIT_VIDEO);
 
 	// Create the window
-	m_window = SDL_CreateWindow("Custom Assert Example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, 0);
+	m_window = SDL_CreateWindow("Sokoban", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, 0);
 
 #if _DEBUG
 	DBG_ASSERT_MSG(m_window, "Window initialisation failed: %s\n", SDL_GetError());

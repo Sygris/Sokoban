@@ -6,16 +6,31 @@
 
 #include "Renderer.h"
 
+#include <vector>
+
+class GameState;
+
 class Application
 {
 public:
 	Application();
 	~Application();
 
+	void ChangeState(GameState* state);
+	void PushState(GameState* state);
+	void PopState();
+
 	void Run();
 	void Destroy();
 
+	void Quit() { m_isRunning = false; }
+
+	Renderer* GetRenderer() { return m_renderer; }
+
 private:
 	Renderer* m_renderer{ nullptr };
+	bool m_isRunning{ false };
+
+	std::vector<GameState*> m_states;
 };
 
