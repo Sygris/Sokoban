@@ -1,8 +1,8 @@
 #pragma once
 
-#include <SDL.h>
-
 #include "GameState.h"
+
+class Input;
 
 class MenuState : public GameState
 {
@@ -20,6 +20,8 @@ public:
 	static MenuState* Instance() { return &s_menuState; }
 protected:
 	MenuState();
+
+	Input* m_input{ nullptr };
 private:
 	static MenuState s_menuState;
 };

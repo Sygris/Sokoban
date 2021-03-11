@@ -4,7 +4,7 @@
 #include "Util/MemoryManager.h"
 #endif // DEBUG
 
-#include "Renderer.h"
+#include "Renderer.h";
 
 #include <vector>
 

@@ -34,10 +34,10 @@ inline void* operator new[](size_t size, const char* filename, int line)
 // if the object creation throws an exception
 inline void operator delete(void* ptr, const char* filename, int line)
 {
-	totalHeapMemory -= _msize(ptr);
+	//totalHeapMemory -= _msize(ptr);
 
-	std::cout << _msize(ptr) << " bytes released" << std::endl;
-	std::cout << "Total heap allocation = " << totalHeapMemory << " bytes " << std::endl;
+	//std::cout << _msize(ptr) << " bytes released" << std::endl;
+	//std::cout << "Total heap allocation = " << totalHeapMemory << " bytes " << std::endl;
 
 	free(ptr);
 }
@@ -45,20 +45,20 @@ inline void operator delete(void* ptr, const char* filename, int line)
 // If successfull object creation, the following deletes will be used
 inline void operator delete(void* ptr)
 {
-	totalHeapMemory -= _msize(ptr);
+	//totalHeapMemory -= _msize(ptr);
 
-	std::cout << _msize(ptr) << " bytes released" << std::endl;
-	std::cout << "Total heap allocation = " << totalHeapMemory << " bytes " << std::endl;
+	//std::cout << _msize(ptr) << " bytes released" << std::endl;
+	//std::cout << "Total heap allocation = " << totalHeapMemory << " bytes " << std::endl;
 
 	free(ptr);
 }
 
 inline void operator delete[](void* ptr)
 {
-	totalHeapMemory -= _msize(ptr);
+	//totalHeapMemory -= _msize(ptr);
 
-	std::cout << _msize(ptr) << " bytes released" << std::endl;
-	std::cout << "Total heap allocation = " << totalHeapMemory << " bytes " << std::endl;
+	//std::cout << _msize(ptr) << " bytes released" << std::endl;
+	//std::cout << "Total heap allocation = " << totalHeapMemory << " bytes " << std::endl;
 
 	free(ptr);
 }

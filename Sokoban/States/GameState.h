@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SDL.h>
 #include "../Application.h"
 
 class GameState

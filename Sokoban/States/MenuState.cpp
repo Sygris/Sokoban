@@ -1,6 +1,7 @@
 #include "MenuState.h"
-
 #include "PlayState.h"
+
+#include "../Input.h"
 
 #include <iostream>
 
@@ -8,12 +9,13 @@ MenuState MenuState::s_menuState;
 
 void MenuState::Init()
 {
-	std::cout << __FUNCTION__ << std::endl;
+	m_input = new Input();
 }
 
 void MenuState::Clean()
 {
-	std::cout << __FUNCTION__ << std::endl;
+	delete m_input;
+	m_input = nullptr;
 }
 
 void MenuState::Pause()
@@ -28,27 +30,15 @@ void MenuState::Resume()
 
 void MenuState::HandleEvents(Application* application)
 {
-	SDL_Event event;
+	m_input->Update();
 
-	if (SDL_PollEvent(&event))
+	if (m_input->IsButtonPressed(B))
 	{
-		switch (event.type)
-		{
-		case SDL_QUIT:
-			application->Quit();
-
-		case SDL_KEYDOWN:
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_SPACE:
-				application->ChangeState(PlayState::Instance());
-				break;
-			default:
-				break;
-			}
-		default:
-			break;
-		}
+		application->Quit();
+	}
+	else if (m_input->IsButtonPressed(A))
+	{
+		application->ChangeState(PlayState::Instance());
 	}
 }
 

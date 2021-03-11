@@ -1,4 +1,6 @@
 #include "Application.h"
+#include "Renderer.h"
+#include "Input.h"
 #include "States/MenuState.h"
 
 Application::Application()
@@ -58,12 +60,6 @@ void Application::Run()
 
 	while (m_isRunning)
 	{
-		/*Uint8 r = 0, g = 0, b = 0, a = 255;
-
-		m_renderer->SetDisplayColour(r, g, b, a);
-		m_renderer->Update();
-		m_renderer->Delay(5000);*/
-
 		m_states.back()->HandleEvents(this);
 		m_states.back()->Update(this);
 		m_states.back()->Draw(this);
