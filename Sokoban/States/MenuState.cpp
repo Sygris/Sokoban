@@ -1,6 +1,8 @@
 #include "MenuState.h"
 #include "PlayState.h"
 
+#include "../Util/MessageHandler.h"
+
 #include "../Input.h"
 #include "../Audio.h"
 
@@ -11,6 +13,13 @@ MenuState MenuState::s_menuState;
 void MenuState::Init()
 {
 	m_input = new Input();
+
+	Util::MessageHandler message;
+
+	if (!m_input->IsControllerInitialised())
+	{
+		message.ShowMessage(Util::messageType::CONTROLLER_WARNING);
+	}
 }
 
 void MenuState::Clean()

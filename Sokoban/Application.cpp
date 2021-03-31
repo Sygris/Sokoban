@@ -7,6 +7,18 @@
 Application::Application()
 {
 	m_isRunning = true;
+
+	m_renderer = new Renderer();
+	ChangeState(MenuState::Instance());
+
+	m_timer = new Timer();
+
+	m_sounds = new Audio();
+	m_sounds->LoadAudio("assets/Audio/music/allegro.mp3", 0, MUSIC, 20);
+	m_sounds->LoadAudio("assets/Audio/music/jingle2ch128kbps.mp3", 1, MUSIC, 20);
+	m_sounds->LoadAudio("assets/Audio/sfx/prefix.wav", 0, SFX, 5);
+
+	m_sounds->PlayMusicTrack(0, -1);
 }
 
 Application::~Application()
@@ -56,18 +68,6 @@ void Application::PopState()
 
 void Application::Run()
 {
-	m_renderer = new Renderer();
-	ChangeState(MenuState::Instance());
-
-	m_timer = new Timer();
-	
-	m_sounds = new Audio();
-	m_sounds->LoadAudio("assets/Audio/music/allegro.mp3", 0, MUSIC, 20);
-	m_sounds->LoadAudio("assets/Audio/music/jingle2ch128kbps.mp3", 1, MUSIC, 20);
-	m_sounds->LoadAudio("assets/Audio/sfx/prefix.wav", 0, SFX, 5);
-
-	m_sounds->PlayMusicTrack(0, -1);
-
 	while (m_isRunning)
 	{
 		float time = m_timer->GetElapsedMS();

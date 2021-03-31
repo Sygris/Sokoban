@@ -17,7 +17,7 @@ void Input::InitialiseController()
 		SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
 	}
 
-	if (SDL_NumJoysticks > 0)
+	if (SDL_NumJoysticks() > 0)
 	{
 		SDL_GameController* gamepad = nullptr;
 
@@ -32,13 +32,15 @@ void Input::InitialiseController()
 #if _DEBUG
 			else
 			{
+				m_isControllerInitialised = false;
+
 				fprintf(stderr, "Could not open controller: %s\n", SDL_GetError());
 			}
 #endif // _DEBUG
 
 			SDL_GameControllerEventState(SDL_ENABLE);
-			m_isControllerInitialised = true;
 
+			m_isControllerInitialised = true;
 			std::cout << "Initialised 1 Gamepad" << std::endl;
 		}
 	}
