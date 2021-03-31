@@ -2,6 +2,7 @@
 #include "PlayState.h"
 
 #include "../Input.h"
+#include "../Audio.h"
 
 #include <iostream>
 
@@ -40,6 +41,11 @@ void MenuState::HandleEvents(Application* application)
 	{
 		application->ChangeState(PlayState::Instance());
 	}
+	else if (m_input->IsButtonPressed(Y))
+	{
+		application->m_sounds->PlaySFX(0, 1, 0);
+	}
+
 }
 
 void MenuState::Update(Application* application)

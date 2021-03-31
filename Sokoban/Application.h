@@ -9,6 +9,7 @@
 #include <vector>
 
 class GameState;
+class Audio;
 
 class Application
 {
@@ -26,11 +27,13 @@ public:
 	void Quit() { m_isRunning = false; }
 
 	Renderer* GetRenderer() { return m_renderer; }
+	Audio* m_sounds;
 
 private:
 	Renderer* m_renderer{ nullptr };
 	bool m_isRunning{ false };
 
 	std::vector<GameState*> m_states;
+
 };
 

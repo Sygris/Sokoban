@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include "Input.h"
 #include "States/MenuState.h"
+#include "Audio.h"
 
 Application::Application()
 {
@@ -57,6 +58,13 @@ void Application::Run()
 {
 	m_renderer = new Renderer();
 	ChangeState(MenuState::Instance());
+	
+	m_sounds = new Audio();
+	m_sounds->LoadAudio("assets/Audio/music/allegro.mp3", 0, MUSIC, 20);
+	m_sounds->LoadAudio("assets/Audio/music/jingle2ch128kbps.mp3", 1, MUSIC, 20);
+	m_sounds->LoadAudio("assets/Audio/sfx/prefix.wav", 0, SFX, 5);
+
+	m_sounds->PlayMusicTrack(0, -1);
 
 	while (m_isRunning)
 	{
@@ -76,6 +84,9 @@ void Application::Destroy()
 		m_states.back()->Clean();
 		m_states.pop_back();
 	}
+
+	delete m_sounds;
+	m_sounds = nullptr;
 
 	delete m_renderer;
 	m_renderer = nullptr;
