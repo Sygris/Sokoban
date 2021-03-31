@@ -43,9 +43,12 @@ void MenuState::HandleEvents(Application* application)
 	}
 	else if (m_input->IsButtonPressed(Y))
 	{
-		application->m_sounds->PlaySFX(0, 1, 0);
+		application->m_sounds->PlaySFX(0, 0, 0);
 	}
-
+	else if (m_input->IsButtonPressed(X))
+	{
+		application->m_sounds->FadeMusicTrack(1, 1, 200);
+	}
 }
 
 void MenuState::Update(Application* application)

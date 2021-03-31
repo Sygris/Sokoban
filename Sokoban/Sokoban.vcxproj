@@ -176,6 +176,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="States\MenuState.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="States\GameState.h" />
     <ClInclude Include="States\MenuState.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Util\MemoryManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

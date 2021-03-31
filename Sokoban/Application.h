@@ -4,9 +4,9 @@
 #include "Util/MemoryManager.h"
 #endif // DEBUG
 
-#include "Renderer.h";
-
 #include <vector>
+#include "Renderer.h"
+#include "Timer.h"
 
 class GameState;
 class Audio;
@@ -34,6 +34,12 @@ private:
 	bool m_isRunning{ false };
 
 	std::vector<GameState*> m_states;
+
+#pragma region Timer
+	Timer* m_timer{ nullptr };
+
+	// TODO: Be able to change between 30, 60 and 120 FPS
+#pragma endregion
 
 };
 

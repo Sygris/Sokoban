@@ -97,7 +97,7 @@ void Input::Update()
 				break;
 			}
 		}
-		else if (m_event.type == SDL_CONTROLLERBUTTONDOWN)
+		else if (m_event.type == SDL_CONTROLLERBUTTONUP)
 		{
 			SDL_ControllerButtonEvent buttonPressed = m_event.cbutton;
 

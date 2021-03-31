@@ -58,6 +58,8 @@ void Application::Run()
 {
 	m_renderer = new Renderer();
 	ChangeState(MenuState::Instance());
+
+	m_timer = new Timer();
 	
 	m_sounds = new Audio();
 	m_sounds->LoadAudio("assets/Audio/music/allegro.mp3", 0, MUSIC, 20);
@@ -68,9 +70,22 @@ void Application::Run()
 
 	while (m_isRunning)
 	{
+		float time = m_timer->GetElapsedMS();
+		m_timer->Reset();
+		m_timer->Start();
+
 		m_states.back()->HandleEvents(this);
 		m_states.back()->Update(this);
 		m_states.back()->Draw(this);
+
+		m_timer->Stop();
+
+		if (time < 1000.0f / 120.0f)
+		{
+			SDL_Delay((1000.0f / 120.0f) - time);
+		}
+
+		std::cout << time << std::endl;
 	}
 	
 	m_renderer->Destroy();
@@ -84,6 +99,9 @@ void Application::Destroy()
 		m_states.back()->Clean();
 		m_states.pop_back();
 	}
+
+	delete m_timer;
+	m_timer = nullptr;
 
 	delete m_sounds;
 	m_sounds = nullptr;
