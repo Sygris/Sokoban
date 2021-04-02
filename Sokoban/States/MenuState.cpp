@@ -39,21 +39,53 @@ void MenuState::HandleEvents(Application* application)
 
 	if (!m_input->IsControllerInitialised()) return;
 
-	if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_B))
+	for (size_t i = 0; i < m_input->GetNumOfConnectedControllers(); i++)
 	{
-		application->Quit();
-	}
-	else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_A))
-	{
-		application->ChangeState(PlayState::Instance());
-	}
-	else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_Y))
-	{
-		application->m_sounds->PlaySFX(0, 0, 0);
-	}
-	else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_X))
-	{
-		application->m_sounds->FadeMusicTrack(1, 1, 200);
+		switch (i)
+		{
+		case PLAYER1:
+			if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_B))
+			{
+				application->Quit();
+			}
+			else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_A))
+			{
+				application->ChangeState(PlayState::Instance());
+			}
+			else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_Y))
+			{
+				application->m_sounds->PlaySFX(0, 0, 0);
+			}
+			else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_X))
+			{
+				application->m_sounds->FadeMusicTrack(1, 1, 200);
+			}
+			break;
+		case PLAYER2:
+			if (m_input->IsControllerButtonPressed(PLAYER2, SDL_CONTROLLER_BUTTON_B))
+			{
+				application->Quit();
+			}
+			else if (m_input->IsControllerButtonPressed(PLAYER2, SDL_CONTROLLER_BUTTON_A))
+			{
+				application->ChangeState(PlayState::Instance());
+			}
+			else if (m_input->IsControllerButtonPressed(PLAYER2, SDL_CONTROLLER_BUTTON_Y))
+			{
+				application->m_sounds->PlaySFX(0, 0, 0);
+			}
+			else if (m_input->IsControllerButtonPressed(PLAYER2, SDL_CONTROLLER_BUTTON_X))
+			{
+				application->m_sounds->FadeMusicTrack(1, 1, 200);
+			}
+			break;
+		case PLAYER3:
+			break;
+		case PLAYER4:
+			break;
+		default:
+			break;
+		}
 	}
 }
 

@@ -30,6 +30,7 @@ public:
 	float GetControllerAxis(Controllers controllerID, SDL_GameControllerAxis axis);
 
 	bool IsControllerInitialised();
+	int GetNumOfConnectedControllers() { return numGamepads; }
 
 private:
 	SDL_Event m_event;
