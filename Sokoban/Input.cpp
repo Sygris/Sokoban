@@ -100,6 +100,7 @@ void Input::Update()
 			// A future improvement is to cope with new controllers being plugged in
 			// when the game is running
 		case SDL_CONTROLLERDEVICEADDED:
+			std::cout << "Device has been connected" << std::endl;
 			if (SDL_IsGameController(m_event.cdevice.which))
 			{
 				AddController(m_event.cdevice.which);
@@ -107,6 +108,7 @@ void Input::Update()
 
 			break;
 		case SDL_CONTROLLERDEVICEREMOVED:
+			std::cout << "Device has been removed" << std::endl;
 			RemoveController(m_event.cdevice.which);
 			break;
 		case SDL_CONTROLLERBUTTONDOWN:
