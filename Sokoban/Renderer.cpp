@@ -1,4 +1,7 @@
 #include "Renderer.h"
+#include <iostream>
+
+SDL_Renderer* Renderer::m_renderer = nullptr;
 
 Renderer::Renderer()
 {
@@ -13,7 +16,7 @@ Renderer::Renderer()
 #endif
 
 	// Create the renderer
-	m_renderer = SDL_CreateRenderer(m_window, -1, 0);
+	m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
 
 #if _DEBUG
 	DBG_ASSERT_MSG(m_window, "Renderer initialisation failed: %s\n", SDL_GetError());

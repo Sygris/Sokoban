@@ -24,5 +24,7 @@ protected:
 	Input* m_input{ nullptr };
 private:
 	static MenuState s_menuState;
+
+	SDL_Texture* m_texture{nullptr};
 };
 

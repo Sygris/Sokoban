@@ -18,4 +18,3 @@ private:
 	Uint64 m_start, m_end;
 	Uint64 m_frequency;
 };
-

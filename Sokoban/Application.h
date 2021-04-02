@@ -24,6 +24,8 @@ public:
 	void Run();
 	void Destroy();
 
+	void ChangeFPS(float fps);
+
 	void Quit() { m_isRunning = false; }
 
 	Renderer* GetRenderer() { return m_renderer; }
@@ -37,6 +39,7 @@ private:
 
 #pragma region Timer
 	Timer* m_timer{ nullptr };
+	float m_fps{ 60.0f };
 
 	// TODO: Be able to change between 30, 60 and 120 FPS
 #pragma endregion

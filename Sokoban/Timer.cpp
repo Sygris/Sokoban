@@ -1,5 +1,4 @@
 #include "Timer.h"
-#include <SDL.h>
 
 Timer::Timer()
 {
@@ -19,7 +18,7 @@ void Timer::Stop()
 
 float Timer::GetElapsedMS()
 {
-	float elapsed = (float)(m_end - m_start) / m_frequency;
+	float elapsed = (float)(m_end - m_start) / (double)m_frequency;
 	elapsed *= 1000;
 	return elapsed;
 }

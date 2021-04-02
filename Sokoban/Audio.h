@@ -7,7 +7,7 @@
 
 enum type
 {
-	MUSIC, SFX, TOTAL
+	MUSIC, SFX
 };
 
 class Audio

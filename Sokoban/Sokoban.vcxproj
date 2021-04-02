@@ -139,7 +139,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)..\SDL\lib\x64\*.dll" "$(TargetDir)"</Command>
@@ -176,6 +176,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="States\MenuState.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Util\MessageHandler.cpp" />
   </ItemGroup>
@@ -188,6 +189,7 @@
     <ClInclude Include="States\GameState.h" />
     <ClInclude Include="States\MenuState.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Util\MemoryManager.h" />
     <ClInclude Include="Util\MessageHandler.h" />

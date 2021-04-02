@@ -5,6 +5,7 @@
 
 #include "../Input.h"
 #include "../Audio.h"
+#include "../TextureManager.h"
 
 #include <iostream>
 
@@ -13,13 +14,7 @@ MenuState MenuState::s_menuState;
 void MenuState::Init()
 {
 	m_input = new Input();
-
-	Util::MessageHandler message;
-
-	if (!m_input->IsControllerInitialised())
-	{
-		message.ShowMessage(Util::messageType::CONTROLLER_WARNING);
-	}
+	m_texture = TextureManager::LoadTexture("Assets/arrow.png", Renderer::GetSDLRenderer());
 }
 
 void MenuState::Clean()
@@ -42,19 +37,21 @@ void MenuState::HandleEvents(Application* application)
 {
 	m_input->Update();
 
-	if (m_input->IsButtonPressed(B))
+	if (!m_input->IsControllerInitialised()) return;
+
+	if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_B))
 	{
 		application->Quit();
 	}
-	else if (m_input->IsButtonPressed(A))
+	else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_A))
 	{
 		application->ChangeState(PlayState::Instance());
 	}
-	else if (m_input->IsButtonPressed(Y))
+	else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_Y))
 	{
 		application->m_sounds->PlaySFX(0, 0, 0);
 	}
-	else if (m_input->IsButtonPressed(X))
+	else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_X))
 	{
 		application->m_sounds->FadeMusicTrack(1, 1, 200);
 	}
@@ -67,7 +64,15 @@ void MenuState::Update(Application* application)
 
 void MenuState::Draw(Application* application)
 {
-	application->GetRenderer()->Update();
+	//application->GetRenderer()->Update();
+
+		// Clears the Front buffer
+	SDL_RenderClear(Renderer::GetSDLRenderer());
+
+	SDL_RenderCopy(Renderer::GetSDLRenderer(), m_texture, NULL, NULL);
+
+	// Flips the back buffer to the front and display
+	SDL_RenderPresent(Renderer::GetSDLRenderer());
 }
 
 MenuState::MenuState()

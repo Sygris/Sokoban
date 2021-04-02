@@ -14,11 +14,9 @@ Application::Application()
 	m_timer = new Timer();
 
 	m_sounds = new Audio();
-	m_sounds->LoadAudio("assets/Audio/music/allegro.mp3", 0, MUSIC, 20);
-	m_sounds->LoadAudio("assets/Audio/music/jingle2ch128kbps.mp3", 1, MUSIC, 20);
-	m_sounds->LoadAudio("assets/Audio/sfx/prefix.wav", 0, SFX, 5);
-
-	m_sounds->PlayMusicTrack(0, -1);
+	m_sounds->LoadAudio("Assets/Audio/music/allegro.mp3", 0, MUSIC, 20);
+	m_sounds->LoadAudio("Assets/Audio/music/jingle2ch128kbps.mp3", 1, MUSIC, 20);
+	m_sounds->LoadAudio("Assets/Audio/sfx/prefix.wav", 0, SFX, 5);
 }
 
 Application::~Application()
@@ -66,11 +64,19 @@ void Application::PopState()
 	}
 }
 
+void Application::ChangeFPS(float fps)
+{
+	m_fps = fps;
+}
+
 void Application::Run()
 {
+	m_sounds->PlayMusicTrack(0, -1);
+
 	while (m_isRunning)
 	{
 		float time = m_timer->GetElapsedMS();
+
 		m_timer->Reset();
 		m_timer->Start();
 
@@ -80,14 +86,13 @@ void Application::Run()
 
 		m_timer->Stop();
 
-		if (time < 1000.0f / 120.0f)
-		{
-			SDL_Delay((1000.0f / 120.0f) - time);
-		}
+		//if (time < 1000.0f / m_fps)
+		//{
 
-		std::cout << time << std::endl;
+		//	SDL_Delay((1000.0f / m_fps) - time);
+		//}
 	}
-	
+
 	m_renderer->Destroy();
 	Destroy();
 }
