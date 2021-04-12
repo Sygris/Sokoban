@@ -180,6 +180,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UI\Button.cpp" />
     <ClCompile Include="Util\MessageHandler.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="UI\Button.h" />
     <ClInclude Include="Util\MemoryManager.h" />
     <ClInclude Include="Util\MessageHandler.h" />
+    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -44,6 +44,5 @@ private:
 
 	// TODO: Be able to change between 30, 60 and 120 FPS
 #pragma endregion
-
 };
 

@@ -4,7 +4,7 @@
 
 enum messageType
 {
-	INSTRUCTIONS, CONTROLLER_WARNING, TOTAL
+	INSTRUCTIONS, CONTROLLER_WARNING, totalOfMessageTypes
 };
 
 class MessageHandler

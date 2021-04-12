@@ -4,8 +4,6 @@
 
 SDL_Texture* TextureManager::LoadTexture(const std::string& filename, SDL_Renderer* renderer)
 {
-    std::cout << filename.c_str() << std::endl;
-
     SDL_Surface* tempSurface = IMG_Load(filename.c_str());
 
     if (tempSurface == nullptr)

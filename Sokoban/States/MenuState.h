@@ -4,6 +4,8 @@
 
 class Button;
 
+enum MainMenuButtons { PLAY, OPTIONS, EXIT, TOTAL };
+
 class MenuState : public GameState
 {
 public:
@@ -25,6 +27,11 @@ protected:
 private:
 	static MenuState s_menuState;
 
-	Button* m_button;
+	SDL_Texture* m_background{ nullptr };
+
+	int m_currentButton = 0;
+	std::vector<Button*> m_buttons;
+
+	void ChangeSelection(int change);
 };
 

@@ -24,8 +24,8 @@ public:
 protected:
 	GameState() {};
 
-	Input* m_input;
-	Audio* m_sounds;
-	Renderer* m_renderer;
+	Input* m_input{ nullptr };
+	Audio* m_sounds{ nullptr };
+	Renderer* m_renderer{ nullptr };
 };
 
