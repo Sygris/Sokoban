@@ -2,9 +2,11 @@
 
 PauseState PauseState::s_pauseState;
 
-void PauseState::Init()
+void PauseState::Init(Renderer* renderer, Input* input, Audio* audio)
 {
-	std::cout << __FUNCTION__ << std::endl;
+	m_input = input;
+	m_sounds = audio;
+	m_renderer = renderer;
 }
 
 void PauseState::Clean()
@@ -50,12 +52,12 @@ void PauseState::HandleEvents(Application* application)
 
 void PauseState::Update(Application* application)
 {
-	application->GetRenderer()->SetDisplayColour(0, 255, 0, 0);
+	m_renderer->SetDisplayColour(0, 255, 0, 0);
 }
 
 void PauseState::Draw(Application* application)
 {
-	application->GetRenderer()->Update();
+	m_renderer->Update();
 }
 
 PauseState::PauseState()

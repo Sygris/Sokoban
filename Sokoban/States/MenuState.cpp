@@ -7,20 +7,23 @@
 #include "../Audio.h"
 #include "../TextureManager.h"
 
+#include "../UI/Button.h"
+
 #include <iostream>
 
 MenuState MenuState::s_menuState;
 
-void MenuState::Init()
+void MenuState::Init(Renderer* renderer, Input* input, Audio* audio)
 {
-	m_input = new Input();
-	m_texture = TextureManager::LoadTexture("Assets/arrow.png", Renderer::GetSDLRenderer());
+	m_input = input;
+	m_sounds = audio;
+	m_renderer = renderer;
+
+	m_button = new Button(m_renderer->GetRenderer(), 220, 150, 200, 80, "Assets/UI/Play.png");
 }
 
 void MenuState::Clean()
 {
-	delete m_input;
-	m_input = nullptr;
 }
 
 void MenuState::Pause()
@@ -41,70 +44,33 @@ void MenuState::HandleEvents(Application* application)
 
 	for (size_t i = 0; i < m_input->GetNumOfConnectedControllers(); i++)
 	{
-		switch (i)
+		Controllers controllerID = (Controllers)i; // Casts the i to Controllers enum
+		
+		if (m_input->IsControllerButtonPressed(controllerID, SDL_CONTROLLER_BUTTON_B))
 		{
-		case PLAYER1:
-			if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_B))
-			{
-				application->Quit();
-			}
-			else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_A))
-			{
-				application->ChangeState(PlayState::Instance());
-			}
-			else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_Y))
-			{
-				application->m_sounds->PlaySFX(0, 0, 0);
-			}
-			else if (m_input->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_X))
-			{
-				application->m_sounds->FadeMusicTrack(1, 1, 200);
-			}
-			break;
-		case PLAYER2:
-			if (m_input->IsControllerButtonPressed(PLAYER2, SDL_CONTROLLER_BUTTON_B))
-			{
-				application->Quit();
-			}
-			else if (m_input->IsControllerButtonPressed(PLAYER2, SDL_CONTROLLER_BUTTON_A))
-			{
-				application->ChangeState(PlayState::Instance());
-			}
-			else if (m_input->IsControllerButtonPressed(PLAYER2, SDL_CONTROLLER_BUTTON_Y))
-			{
-				application->m_sounds->PlaySFX(0, 0, 0);
-			}
-			else if (m_input->IsControllerButtonPressed(PLAYER2, SDL_CONTROLLER_BUTTON_X))
-			{
-				application->m_sounds->FadeMusicTrack(1, 1, 200);
-			}
-			break;
-		case PLAYER3:
-			break;
-		case PLAYER4:
-			break;
-		default:
-			break;
+			application->Quit();
+		}
+		else if (m_input->IsControllerButtonPressed(controllerID, SDL_CONTROLLER_BUTTON_START))
+		{
+			application->ChangeState(PlayState::Instance());
+			return;
+		}
+		else if (m_input->IsControllerButtonPressed(controllerID, SDL_CONTROLLER_BUTTON_Y))
+		{
+			m_sounds->PlaySFX(0, 0, 0);
 		}
 	}
 }
 
 void MenuState::Update(Application* application)
 {
-	application->GetRenderer()->SetDisplayColour(255, 0, 0, 0);
+	m_renderer->SetDisplayColour(61, 61, 59, 0);
 }
 
 void MenuState::Draw(Application* application)
 {
-	//application->GetRenderer()->Update();
-
-		// Clears the Front buffer
-	SDL_RenderClear(Renderer::GetSDLRenderer());
-
-	SDL_RenderCopy(Renderer::GetSDLRenderer(), m_texture, NULL, NULL);
-
-	// Flips the back buffer to the front and display
-	SDL_RenderPresent(Renderer::GetSDLRenderer());
+	m_button->Draw();
+	m_renderer->Update();
 }
 
 MenuState::MenuState()

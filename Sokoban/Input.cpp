@@ -17,45 +17,9 @@ void Input::InitialiseController()
 		SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
 	}
 
-	//	int nJoysticks = SDL_NumJoysticks();
 	numGamepads = 0;
-	//
-	//	// Count how many controllers there are
-	//	for (int i = 0; i < nJoysticks; i++)
-	//	{
-	//		if (SDL_IsGameController(i))
-	//		{
-	//			numGamepads++;
-	//		}
-	//	}
-	//
-	//	// If we have some controllers attached
-	//	if (numGamepads > 0)
-	//	{
-	//		for (int i = 0; i < numGamepads; i++)
-	//		{
-	//			// Open the controller and add it to our list
-	//			SDL_GameController* pad = SDL_GameControllerOpen(i);
-	//
-	//			if (SDL_GameControllerGetAttached(pad) == 1)
-	//			{
-	//				m_connectedControllers.push_back(pad);
-	//				m_isControllerInitialised = true;
-	//			}
-	//#if _DEBUG
-	//			else
-	//			{
-	//				std::cout << "SDL_GetError() = " << SDL_GetError() << std::endl;
-	//			}
-	//#endif // _DEBUG
-	//		}
 
 	SDL_GameControllerEventState(SDL_ENABLE);
-	//}
-
-	//// Vectors are empty to begin with, this sets their size
-	//m_controllerInputs.resize(numGamepads);
-	//m_lastControllerInputs.resize(numGamepads);
 
 	//// Set the status of the controllers to "nothing is happening"
 	//for (int i = 0; i < numGamepads; i++)
@@ -75,11 +39,6 @@ void Input::InitialiseController()
 
 void Input::Update()
 {
-	if (numGamepads == 0)
-	{
-		//InitialiseController();
-	}
-
 	// Copies the the button and axis states from the previous frame into the lastControllerInputs vector
 	for (int i = 0; i < numGamepads; i++)
 	{
@@ -93,14 +52,13 @@ void Input::Update()
 		}
 	}
 
-	if (SDL_PollEvent(&m_event))
+	while (SDL_PollEvent(&m_event))
 	{
 		switch (m_event.type) {
-			// This happens when a device is added
-			// A future improvement is to cope with new controllers being plugged in
-			// when the game is running
 		case SDL_CONTROLLERDEVICEADDED:
+			// TODO: Maybe limit how many controllers the game register
 			std::cout << "Device has been connected" << std::endl;
+
 			if (SDL_IsGameController(m_event.cdevice.which))
 			{
 				AddController(m_event.cdevice.which);
@@ -144,12 +102,70 @@ void Input::Update()
 	}
 }
 
+void Input::ResizeInputVectors()
+{
+	m_controllerInputs.resize(numGamepads);
+	m_lastControllerInputs.resize(numGamepads);
+}
+
+bool Input::IsControllerInitialised()
+{
+	return m_isControllerInitialised;
+}
+
+void Input::AddController(int deviceID)
+{
+	SDL_GameController* pad = SDL_GameControllerOpen(deviceID);
+
+	std::cout << SDL_GameControllerName(pad) << std::endl;
+
+	if (SDL_GameControllerGetAttached(pad) == 1)
+	{
+		m_connectedControllers.push_back(pad);
+		m_isControllerInitialised = true;
+
+		numGamepads++;
+
+		ResizeInputVectors();
+	}
+}
+
+void Input::RemoveController(int deviceID)
+{
+	SDL_Joystick* joystick = SDL_JoystickFromInstanceID(deviceID);
+
+	for (size_t i = 0; i < m_connectedControllers.size(); i++)
+	{
+		SDL_Joystick* tempJoystick = SDL_GameControllerGetJoystick(m_connectedControllers[i]);
+
+		if (tempJoystick == joystick)
+		{
+			SDL_GameControllerClose(m_connectedControllers[i]);
+
+			m_connectedControllers.erase(m_connectedControllers.begin() + i);
+		}
+	}
+
+	numGamepads--;
+
+	ResizeInputVectors();
+
+	if (numGamepads == 0)
+	{
+		m_isControllerInitialised = false;
+	}
+
+}
+
 void Input::DestroyInput()
 {
 	for (int i = 0; i < m_connectedControllers.size(); i++)
 	{
 		SDL_GameControllerClose(m_connectedControllers[i]);
+		numGamepads--;
 	}
+
+	ResizeInputVectors();
 }
 
 // Has a button been pressed
@@ -175,54 +191,6 @@ float Input::GetControllerAxis(Controllers controllerID, SDL_GameControllerAxis 
 	return m_controllerInputs[controllerID].axis[axis];
 }
 
-bool Input::IsControllerInitialised()
-{
-	return m_isControllerInitialised;
-}
-
-void Input::AddController(int deviceID)
-{
-	SDL_GameController* pad = SDL_GameControllerOpen(deviceID);
-
-	if (SDL_GameControllerGetAttached(pad) == 1)
-	{
-		m_connectedControllers.push_back(pad);
-		m_isControllerInitialised = true;
-
-		numGamepads++;
-
-		m_controllerInputs.resize(numGamepads);
-		m_lastControllerInputs.resize(numGamepads);
-	}
-}
-
-void Input::RemoveController(int deviceID)
-{
-	SDL_Joystick* joystick = SDL_JoystickFromInstanceID(deviceID);
-
-	for (size_t i = 0; i < m_connectedControllers.size(); i++)
-	{
-		SDL_Joystick* tempJoystick = SDL_GameControllerGetJoystick(m_connectedControllers[i]);
-
-		if (tempJoystick == joystick)
-		{
-			SDL_GameControllerClose(m_connectedControllers[i]);
-
-			m_connectedControllers.erase(m_connectedControllers.begin() + i);
-		}
-	}
-
-	numGamepads--;
-
-	if (numGamepads == 0)
-	{
-		m_isControllerInitialised = false;
-	}
-
-	m_controllerInputs.resize(numGamepads);
-	m_lastControllerInputs.resize(numGamepads);
-}
-
 int Input::ProcessAxisInput(float input)
 {
 	// Right or Down
@@ -238,3 +206,5 @@ int Input::ProcessAxisInput(float input)
 
 	return 0;
 }
+
+

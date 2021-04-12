@@ -22,9 +22,8 @@ public:
 	void Delay(int time);
 	void Destroy();
 
-	static SDL_Renderer* GetSDLRenderer() { return m_renderer; };
-
+	SDL_Renderer* GetRenderer() { return m_renderer; }
 private:
 	SDL_Window* m_window{ nullptr };
-	static SDL_Renderer* m_renderer;
+	SDL_Renderer* m_renderer;
 };

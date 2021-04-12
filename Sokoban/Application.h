@@ -10,6 +10,7 @@
 
 class GameState;
 class Audio;
+class Input;
 
 class Application
 {
@@ -28,14 +29,14 @@ public:
 
 	void Quit() { m_isRunning = false; }
 
-	Renderer* GetRenderer() { return m_renderer; }
-	Audio* m_sounds;
-
 private:
 	Renderer* m_renderer{ nullptr };
 	bool m_isRunning{ false };
 
 	std::vector<GameState*> m_states;
+
+	Input* m_input;
+	Audio* m_sounds;
 
 #pragma region Timer
 	Timer* m_timer{ nullptr };

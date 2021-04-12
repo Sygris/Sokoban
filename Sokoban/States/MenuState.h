@@ -2,12 +2,12 @@
 
 #include "GameState.h"
 
-class Input;
+class Button;
 
 class MenuState : public GameState
 {
 public:
-	void Init();
+	void Init(Renderer* renderer, Input* input, Audio* audio);
 	void Clean();
 
 	void Pause();
@@ -18,13 +18,13 @@ public:
 	void Draw(Application* application);
 
 	static MenuState* Instance() { return &s_menuState; }
+
 protected:
 	MenuState();
 
-	Input* m_input{ nullptr };
 private:
 	static MenuState s_menuState;
 
-	SDL_Texture* m_texture{nullptr};
+	Button* m_button;
 };
 

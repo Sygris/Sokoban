@@ -11,7 +11,7 @@ struct GamePad
 	int axis[SDL_CONTROLLER_AXIS_MAX];
 };
 
-enum Controllers { PLAYER1 = 0, PLAYER2, PLAYER3, PLAYER4 };
+enum Controllers { PLAYER1 = 0, PLAYER2, totalOfControllers };
 
 const int DEADZONE = 25000;
 
@@ -40,8 +40,11 @@ private:
 	std::vector<GamePad> m_lastControllerInputs;
 	int numGamepads;
 
+	void ResizeInputVectors();
+
 	void AddController(int deviceID);
 	void RemoveController(int deviceID);
+
 	int ProcessAxisInput(float input);
 
 	bool m_isControllerInitialised { false };

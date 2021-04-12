@@ -9,14 +9,15 @@ Application::Application()
 	m_isRunning = true;
 
 	m_renderer = new Renderer();
-	ChangeState(MenuState::Instance());
-
+	m_input = new Input();
 	m_timer = new Timer();
 
 	m_sounds = new Audio();
 	m_sounds->LoadAudio("Assets/Audio/music/allegro.mp3", 0, MUSIC, 20);
 	m_sounds->LoadAudio("Assets/Audio/music/jingle2ch128kbps.mp3", 1, MUSIC, 20);
 	m_sounds->LoadAudio("Assets/Audio/sfx/prefix.wav", 0, SFX, 5);
+	
+	ChangeState(MenuState::Instance());
 }
 
 Application::~Application()
@@ -34,7 +35,7 @@ void Application::ChangeState(GameState* state)
 
 	// Stores the state and initialise it
 	m_states.push_back(state);
-	m_states.back()->Init();
+	m_states.back()->Init(m_renderer, m_input, m_sounds);
 }
 
 void Application::PushState(GameState* state)
@@ -47,7 +48,7 @@ void Application::PushState(GameState* state)
 
 	// Stores the state and initialise it
 	m_states.push_back(state);
-	m_states.back()->Init();
+	m_states.back()->Init(m_renderer, m_input, m_sounds);
 }
 
 void Application::PopState()
@@ -71,26 +72,24 @@ void Application::ChangeFPS(float fps)
 
 void Application::Run()
 {
-	m_sounds->PlayMusicTrack(0, -1);
+	//m_sounds->PlayMusicTrack(0, -1);
+
+	unsigned int a = SDL_GetTicks();
+	unsigned int b = SDL_GetTicks();
+	double delta = 0;
 
 	while (m_isRunning)
 	{
-		float time = m_timer->GetElapsedMS();
+		a = SDL_GetTicks();
+		delta = a - b;
 
-		m_timer->Reset();
-		m_timer->Start();
-
-		m_states.back()->HandleEvents(this);
-		m_states.back()->Update(this);
-		m_states.back()->Draw(this);
-
-		m_timer->Stop();
-
-		//if (time < 1000.0f / m_fps)
-		//{
-
-		//	SDL_Delay((1000.0f / m_fps) - time);
-		//}
+		if (delta >= 1000 / m_fps)
+		{
+			b = a;
+			m_states.back()->HandleEvents(this);
+			m_states.back()->Update(this);
+			m_states.back()->Draw(this);
+		}
 	}
 
 	m_renderer->Destroy();
@@ -107,6 +106,9 @@ void Application::Destroy()
 
 	delete m_timer;
 	m_timer = nullptr;
+
+	delete m_input;
+	m_input = nullptr;
 
 	delete m_sounds;
 	m_sounds = nullptr;

@@ -3,7 +3,7 @@
 class PauseState : public GameState
 {
 public:
-	void Init();
+	void Init(Renderer* renderer, Input* input, Audio* audio);
 	void Clean();
 
 	void Pause();

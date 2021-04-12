@@ -1,8 +1,6 @@
 #include "Renderer.h"
 #include <iostream>
 
-SDL_Renderer* Renderer::m_renderer = nullptr;
-
 Renderer::Renderer()
 {
 	// Startup
@@ -37,11 +35,11 @@ void Renderer::SetDisplayColour(int r, int g, int b, int a)
 
 void Renderer::Update()
 {
-	// Clears the Front buffer
-	SDL_RenderClear(m_renderer);
-
 	// Flips the back buffer to the front and display
 	SDL_RenderPresent(m_renderer);
+
+	// Clears the Front buffer
+	SDL_RenderClear(m_renderer);
 }
 
 void Renderer::Delay(int time)

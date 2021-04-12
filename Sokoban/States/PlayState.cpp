@@ -4,9 +4,11 @@
 
 PlayState PlayState::s_playState;
 
-void PlayState::Init()
+void PlayState::Init(Renderer* renderer, Input* input, Audio* audio)
 {
-	std::cout << __FUNCTION__ << std::endl;
+	m_input = input;
+	m_sounds = audio;
+	m_renderer = renderer;
 }
 
 void PlayState::Clean()
@@ -52,12 +54,12 @@ void PlayState::HandleEvents(Application* application)
 
 void PlayState::Update(Application* application)
 {
-	application->GetRenderer()->SetDisplayColour(0, 0, 255, 0);
+	m_renderer->SetDisplayColour(0, 0, 255, 0);
 }
 
 void PlayState::Draw(Application* application)
 {
-	application->GetRenderer()->Update();
+	m_renderer->Update();
 }
 
 PlayState::PlayState()

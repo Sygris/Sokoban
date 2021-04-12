@@ -6,7 +6,7 @@
 class GameState
 {
 public:
-	virtual void Init() = 0;
+	virtual void Init(Renderer* renderer, Input* input, Audio* audio) = 0;
 	virtual void Clean() = 0;
 
 	virtual void Pause() = 0;
@@ -23,5 +23,9 @@ public:
 
 protected:
 	GameState() {};
+
+	Input* m_input;
+	Audio* m_sounds;
+	Renderer* m_renderer;
 };
 
