@@ -27,6 +27,10 @@ public:
 
 	void ChangeFPS(float fps);
 
+	inline Input* GetInput() { return m_input; }
+	inline Audio* GetAudio() { return m_sounds; }
+	inline SDL_Renderer* GetRenderer() { return m_renderer->GetRenderer(); }
+
 	void Quit() { m_isRunning = false; }
 
 private:

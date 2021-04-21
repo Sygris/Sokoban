@@ -16,7 +16,7 @@ Application::Application()
 	m_sounds->LoadAudio("Assets/Audio/music/allegro.mp3", 0, MUSIC, 20);
 	m_sounds->LoadAudio("Assets/Audio/music/jingle2ch128kbps.mp3", 1, MUSIC, 20);
 	m_sounds->LoadAudio("Assets/Audio/sfx/prefix.wav", 0, SFX, 5);
-	
+
 	ChangeState(MenuState::Instance());
 }
 
@@ -35,7 +35,7 @@ void Application::ChangeState(GameState* state)
 
 	// Stores the state and initialise it
 	m_states.push_back(state);
-	m_states.back()->Init(m_renderer, m_input, m_sounds);
+	m_states.back()->Init(this);
 }
 
 void Application::PushState(GameState* state)
@@ -48,7 +48,7 @@ void Application::PushState(GameState* state)
 
 	// Stores the state and initialise it
 	m_states.push_back(state);
-	m_states.back()->Init(m_renderer, m_input, m_sounds);
+	m_states.back()->Init(this);
 }
 
 void Application::PopState()
@@ -85,10 +85,23 @@ void Application::Run()
 
 		if (delta >= 1000 / m_fps)
 		{
+			SDL_RenderClear(m_renderer->GetRenderer());
+			
 			b = a;
-			m_states.back()->HandleEvents(this);
-			m_states.back()->Update(this);
-			m_states.back()->Draw(this);
+			m_states.back()->HandleEvents();
+			m_states.back()->Update();
+
+			if (m_states.size() > 1)
+			{
+				for (GameState* state : m_states)
+					state->Draw();
+			}
+			else
+			{
+				m_states.back()->Draw();
+			}
+
+			SDL_RenderPresent(m_renderer->GetRenderer());
 		}
 	}
 

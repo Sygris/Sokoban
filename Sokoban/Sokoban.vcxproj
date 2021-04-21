@@ -170,6 +170,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="States\PauseState.cpp" />
     <ClCompile Include="States\PlayState.cpp" />
     <ClCompile Include="States\GameState.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UI\Button.cpp" />
+    <ClCompile Include="Util\Logger.cpp" />
     <ClCompile Include="Util\MessageHandler.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
@@ -186,6 +188,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="States\PauseState.h" />
     <ClInclude Include="States\PlayState.h" />
     <ClInclude Include="States\GameState.h" />
@@ -194,8 +197,10 @@
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI\Button.h" />
+    <ClInclude Include="Util\Logger.h" />
     <ClInclude Include="Util\MemoryManager.h" />
     <ClInclude Include="Util\MessageHandler.h" />
+    <ClInclude Include="Util\Utilities.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

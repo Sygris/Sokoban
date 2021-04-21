@@ -1,5 +1,9 @@
 #pragma once
+
 #include <iostream>
+#include <string>
+
+#include "Logger.h"
 
 static size_t totalHeapMemory = 0;
 
@@ -10,8 +14,9 @@ inline void* operator new(size_t size, const char* filename, int line)
 
 	void* ptr = new char[size];
 
-	std::cout << "Size: " << size << " bytes." << " Filename: " << filename << " line: " << line << std::endl;
-	std::cout << "Total heap allocation = " << totalHeapMemory << " bytes" << std::endl;
+	std::string debug = "Size: " + std::to_string(size) + " bytes." + " Filename: " + filename + " line: " + std::to_string(line);
+
+	Logger::GetLogger()->Log(debug);
 
 	return ptr;
 }
@@ -22,8 +27,9 @@ inline void* operator new[](size_t size, const char* filename, int line)
 
 	void* ptr = new char[size];
 
-	std::cout << "Size: " << size << " bytes." << " Filename: " << filename << " line: " << line << std::endl;
-	std::cout << "Total heap allocation = " << totalHeapMemory << " bytes" << std::endl;
+	std::string debug = "Size: " + std::to_string(size) + " bytes." + " Filename: " + filename + " line: " + std::to_string(line);
+
+	Logger::GetLogger()->Log(debug);
 
 	return ptr;
 }

@@ -1,19 +1,25 @@
 #include "PlayState.h"
 
 #include "PauseState.h"
+#include "MenuState.h"
+
+#include "../Map.h"
 
 PlayState PlayState::s_playState;
 
-void PlayState::Init(Renderer* renderer, Input* input, Audio* audio)
+void PlayState::Init(Application* application)
 {
-	m_input = input;
-	m_sounds = audio;
-	m_renderer = renderer;
+	m_application = application;
+
+	m_map = new Map(m_application->GetRenderer(), "Assets/Maps/level01.txt", "Assets/Maps/tilesheet.png", 64);
 }
 
 void PlayState::Clean()
 {
 	std::cout << __FUNCTION__ << std::endl;
+	
+	delete m_map;
+	m_map = nullptr;
 }
 
 void PlayState::Pause()
@@ -26,7 +32,7 @@ void PlayState::Resume()
 	std::cout << __FUNCTION__ << std::endl;
 }
 
-void PlayState::HandleEvents(Application* application)
+void PlayState::HandleEvents()
 {
 	SDL_Event event;
 
@@ -35,13 +41,13 @@ void PlayState::HandleEvents(Application* application)
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			application->Quit();
+			m_application->Quit();
 
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_SPACE:
-				application->PushState(PauseState::Instance());
+				m_application->ChangeState(MenuState::Instance());
 				break;
 			default:
 				break;
@@ -52,14 +58,13 @@ void PlayState::HandleEvents(Application* application)
 	}
 }
 
-void PlayState::Update(Application* application)
+void PlayState::Update()
 {
-	m_renderer->SetDisplayColour(0, 0, 255, 0);
 }
 
-void PlayState::Draw(Application* application)
+void PlayState::Draw()
 {
-	m_renderer->Update();
+	m_map->Render();
 }
 
 PlayState::PlayState()

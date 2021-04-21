@@ -1,17 +1,19 @@
 #include "PauseState.h"
+#include "../TextureManager.h"
 
 PauseState PauseState::s_pauseState;
 
-void PauseState::Init(Renderer* renderer, Input* input, Audio* audio)
+void PauseState::Init(Application* application)
 {
-	m_input = input;
-	m_sounds = audio;
-	m_renderer = renderer;
+	m_application = application;
+
+	m_text = TextureManager::LoadTexture("Assets/menu.png", m_application->GetRenderer());
 }
 
 void PauseState::Clean()
 {
 	std::cout << __FUNCTION__ << std::endl;
+	SDL_DestroyTexture(m_text);
 }
 
 void PauseState::Pause()
@@ -24,7 +26,7 @@ void PauseState::Resume()
 	std::cout << __FUNCTION__ << std::endl;
 }
 
-void PauseState::HandleEvents(Application* application)
+void PauseState::HandleEvents()
 {
 	SDL_Event event;
 
@@ -33,13 +35,13 @@ void PauseState::HandleEvents(Application* application)
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			application->Quit();
+			m_application->Quit();
 
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_SPACE:
-				application->PopState();
+				m_application->PopState();
 				break;
 			default:
 				break;
@@ -50,14 +52,13 @@ void PauseState::HandleEvents(Application* application)
 	}
 }
 
-void PauseState::Update(Application* application)
+void PauseState::Update()
 {
-	m_renderer->SetDisplayColour(0, 255, 0, 0);
 }
 
-void PauseState::Draw(Application* application)
+void PauseState::Draw()
 {
-	m_renderer->Update();
+	SDL_RenderCopy(m_application->GetRenderer(), m_text, NULL, NULL);
 }
 
 PauseState::PauseState()

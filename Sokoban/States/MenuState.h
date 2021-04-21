@@ -9,15 +9,15 @@ enum MainMenuButtons { PLAY, OPTIONS, EXIT, TOTAL };
 class MenuState : public GameState
 {
 public:
-	void Init(Renderer* renderer, Input* input, Audio* audio);
+	void Init(Application* application);
 	void Clean();
 
 	void Pause();
 	void Resume();
 
-	void HandleEvents(Application* application);
-	void Update(Application* application);
-	void Draw(Application* application);
+	void HandleEvents();
+	void Update();
+	void Draw();
 
 	static MenuState* Instance() { return &s_menuState; }
 

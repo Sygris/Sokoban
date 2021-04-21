@@ -1,17 +1,20 @@
 #pragma once
 #include "GameState.h"
+
+class Map;
+
 class PlayState : public GameState
 {
 public:
-	void Init(Renderer* renderer, Input* input, Audio* audio);
+	void Init(Application* application);
 	void Clean();
 
 	void Pause();
 	void Resume();
 
-	void HandleEvents(Application* application);
-	void Update(Application* application);
-	void Draw(Application* application);
+	void HandleEvents();
+	void Update();
+	void Draw();
 
 	static PlayState* Instance() { return &s_playState; }
 
@@ -19,5 +22,7 @@ protected:
 	PlayState();
 private:
 	static PlayState s_playState;
+
+	Map* m_map;
 };
 

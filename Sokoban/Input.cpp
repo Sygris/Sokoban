@@ -20,21 +20,6 @@ void Input::InitialiseController()
 	numGamepads = 0;
 
 	SDL_GameControllerEventState(SDL_ENABLE);
-
-	//// Set the status of the controllers to "nothing is happening"
-	//for (int i = 0; i < numGamepads; i++)
-	//{
-	//	for (int a = 0; a < SDL_CONTROLLER_AXIS_MAX; a++)
-	//	{
-	//		m_controllerInputs[i].axis[a] = 0;
-	//		m_lastControllerInputs[i].axis[a] = 0;
-	//	}
-	//	for (int b = 0; b < SDL_CONTROLLER_BUTTON_MAX; b++)
-	//	{
-	//		m_controllerInputs[i].buttons[b] = false;
-	//		m_lastControllerInputs[i].buttons[b] = false;
-	//	}
-	//}
 }
 
 void Input::Update()
@@ -154,7 +139,6 @@ void Input::RemoveController(int deviceID)
 	{
 		m_isControllerInitialised = false;
 	}
-
 }
 
 void Input::DestroyInput()
