@@ -4,7 +4,8 @@
 #include "States/MenuState.h"
 #include "Audio.h"
 #include "Timer.h"
-#include <chrono>
+
+#include "UI/Text.h"
 
 Application::Application()
 {
@@ -17,6 +18,8 @@ Application::Application()
 	m_sounds->LoadAudio("Assets/Audio/music/allegro.mp3", 0, MUSIC, 20);
 	m_sounds->LoadAudio("Assets/Audio/music/jingle2ch128kbps.mp3", 1, MUSIC, 20);
 	m_sounds->LoadAudio("Assets/Audio/sfx/prefix.wav", 0, SFX, 5);
+
+	m_textFPS = new Text("Assets/UI/font.ttf", 25);
 
 	ChangeState(MenuState::Instance());
 }
@@ -94,10 +97,13 @@ void Application::Run()
 				m_states.back()->Draw();
 			}
 
-			m_renderer->Update();
-
 			Timer::GetInstance()->CalculateFPS();
+
+			m_textFPS->DisplayText(std::to_string((int)Timer::GetInstance()->GetLastFPS()), 10, 0, SDL_Color{ 255, 255, 0, 255 }, m_renderer->GetRenderer());
+			
+			m_renderer->Update();
 		}
+
 	}
 
 	m_renderer->Destroy();
@@ -111,6 +117,9 @@ void Application::Destroy()
 		m_states.back()->Clean();
 		m_states.pop_back();
 	}
+
+	delete m_textFPS;
+	m_textFPS = nullptr;
 
 	delete m_input;
 	m_input = nullptr;

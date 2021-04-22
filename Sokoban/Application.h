@@ -10,6 +10,7 @@
 class GameState;
 class Audio;
 class Input;
+class Text;
 
 class Application
 {
@@ -43,6 +44,8 @@ private:
 
 #pragma region Timer
 	float m_fps{ 60.0f };
+
+	Text* m_textFPS{ nullptr };
 
 	// TODO: Be able to change between 30, 60 and 120 FPS
 #pragma endregion

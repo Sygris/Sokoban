@@ -21,7 +21,7 @@ void Timer::CalculateFPS()
 	if (m_elapsedTime >= 1) // If a second has pass the game will print how many FPS it has passed
 	{
 		m_elapsedTime = 0;
-		std::cout << m_currentFPS << std::endl;
+		m_lastFPS = m_currentFPS;
 		m_currentFPS = 0;
 	}
 }
