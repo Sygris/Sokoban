@@ -6,7 +6,6 @@
 
 #include <vector>
 #include "Renderer.h"
-#include "Timer.h"
 
 class GameState;
 class Audio;
@@ -43,7 +42,6 @@ private:
 	Audio* m_sounds;
 
 #pragma region Timer
-	Timer* m_timer{ nullptr };
 	float m_fps{ 60.0f };
 
 	// TODO: Be able to change between 30, 60 and 120 FPS

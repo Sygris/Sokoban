@@ -6,10 +6,10 @@ SDL_Texture* TextureManager::LoadTexture(const std::string& filename, SDL_Render
 {
     SDL_Surface* tempSurface = IMG_Load(filename.c_str());
 
-    if (tempSurface == nullptr)
-    {
-        std::cout << SDL_GetError() << std::endl;
-    }
+#if _DEBUG
+    SDL_assert(tempSurface != nullptr);
+#endif // _DEBUG
+
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
 

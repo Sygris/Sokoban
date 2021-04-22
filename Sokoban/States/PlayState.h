@@ -2,6 +2,7 @@
 #include "GameState.h"
 
 class Map;
+class Player;
 
 class PlayState : public GameState
 {
@@ -23,6 +24,7 @@ protected:
 private:
 	static PlayState s_playState;
 
-	Map* m_map;
+	Map* m_map{ nullptr };
+	Player* m_object{ nullptr };
 };
 

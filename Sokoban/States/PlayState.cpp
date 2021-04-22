@@ -1,7 +1,13 @@
 #include "PlayState.h"
 
-#include "PauseState.h"
 #include "MenuState.h"
+#include "PauseState.h"
+
+#include "../Application.h"
+#include "../Input.h"
+#include "../Audio.h"
+
+#include "../Player.h"
 
 #include "../Map.h"
 
@@ -12,12 +18,22 @@ void PlayState::Init(Application* application)
 	m_application = application;
 
 	m_map = new Map(m_application->GetRenderer(), "Assets/Maps/level01.txt", "Assets/Maps/tilesheet.png", 64);
+
+	m_object = new Player(
+		m_application->GetRenderer(),
+		"Assets/Spritesheet/Player.png",
+		Vector2D(256, 320),
+		Vector2D(64, 64),
+		Vector2D(64, 64),
+		m_application->GetInput(),
+		m_application->GetAudio(),
+		m_map,
+		PLAYER1
+	);
 }
 
 void PlayState::Clean()
 {
-	std::cout << __FUNCTION__ << std::endl;
-	
 	delete m_map;
 	m_map = nullptr;
 }
@@ -34,37 +50,27 @@ void PlayState::Resume()
 
 void PlayState::HandleEvents()
 {
-	SDL_Event event;
+	m_application->GetInput()->Update();
 
-	if (SDL_PollEvent(&event))
+	if (!m_application->GetInput()->IsControllerInitialised()) return;
+
+	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_X))
 	{
-		switch (event.type)
-		{
-		case SDL_QUIT:
-			m_application->Quit();
-
-		case SDL_KEYDOWN:
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_SPACE:
-				m_application->ChangeState(MenuState::Instance());
-				break;
-			default:
-				break;
-			}
-		default:
-			break;
-		}
+		m_application->ChangeState(MenuState::Instance());
 	}
+
+	m_object->HandleEvents();
 }
 
 void PlayState::Update()
 {
+	m_object->Update();
 }
 
 void PlayState::Draw()
 {
 	m_map->Render();
+	m_object->Draw();
 }
 
 PlayState::PlayState()

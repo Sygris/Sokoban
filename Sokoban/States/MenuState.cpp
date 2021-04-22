@@ -77,14 +77,11 @@ void MenuState::HandleEvents()
 
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_B))
 	{
-		m_application->PushState(PauseState::Instance());
+		m_application->ChangeFPS(144);
 	}
 
-	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_X))
-	{
-		m_application->GetAudio()->PlaySFX(0, 0, 0);
-	}
-
+	// Maybe next time I should use Callbacks 
+	// If the player presses the Button A the code will check which button is currently selected and run its behaviour
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_A))
 	{
 		switch (m_currentButton)
@@ -93,6 +90,7 @@ void MenuState::HandleEvents()
 			m_application->ChangeState(PlayState::Instance());
 			break;
 		case OPTIONS:
+			m_application->PushState(PauseState::Instance());
 			break;
 		case EXIT:
 			m_application->Quit();

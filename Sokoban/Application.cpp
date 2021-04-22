@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "States/MenuState.h"
 #include "Audio.h"
+#include "Timer.h"
 
 Application::Application()
 {
@@ -10,7 +11,6 @@ Application::Application()
 
 	m_renderer = new Renderer();
 	m_input = new Input();
-	m_timer = new Timer();
 
 	m_sounds = new Audio();
 	m_sounds->LoadAudio("Assets/Audio/music/allegro.mp3", 0, MUSIC, 20);
@@ -76,6 +76,10 @@ void Application::Run()
 
 	unsigned int a = SDL_GetTicks();
 	unsigned int b = SDL_GetTicks();
+
+	int fps = 0;
+	uint32_t frameCount = 0;
+
 	double delta = 0;
 
 	while (m_isRunning)
@@ -83,11 +87,20 @@ void Application::Run()
 		a = SDL_GetTicks();
 		delta = a - b;
 
-		if (delta >= 1000 / m_fps)
+		if (delta >= 1000.0f / (double)m_fps)
 		{
-			SDL_RenderClear(m_renderer->GetRenderer());
-			
 			b = a;
+
+			fps++;
+			frameCount += delta;
+
+			if (frameCount >= 1000.0f)
+			{
+				frameCount = 0;
+				std::cout << fps << std::endl;
+				fps = 0;
+			}
+
 			m_states.back()->HandleEvents();
 			m_states.back()->Update();
 
@@ -101,8 +114,9 @@ void Application::Run()
 				m_states.back()->Draw();
 			}
 
-			SDL_RenderPresent(m_renderer->GetRenderer());
+			m_renderer->Update();
 		}
+
 	}
 
 	m_renderer->Destroy();
@@ -116,9 +130,6 @@ void Application::Destroy()
 		m_states.back()->Clean();
 		m_states.pop_back();
 	}
-
-	delete m_timer;
-	m_timer = nullptr;
 
 	delete m_input;
 	m_input = nullptr;

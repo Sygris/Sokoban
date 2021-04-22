@@ -102,7 +102,7 @@ bool Map::IsWall(int x, int y)
 {
 	int size = m_blocksize * m_scaleBlocksize;
 
-	if (m_mapLayout[y / size][x / size] != 'S')
+	if (m_mapLayout[y / size][x / size] == '5')
 		return true;
 
 	return false;

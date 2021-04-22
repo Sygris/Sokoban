@@ -1,30 +1,47 @@
 #include "Timer.h"
+#include <SDL.h>
+
+Timer* Timer::s_instance = nullptr;
+
+Timer* Timer::Instance()
+{
+	if (nullptr == s_instance)
+		s_instance = new Timer();
+
+	return s_instance;
+}
+
+void Timer::Destroy()
+{
+	delete s_instance;
+	s_instance = nullptr;
+}
 
 Timer::Timer()
 {
 	Reset();
-	m_frequency = SDL_GetPerformanceFrequency();
 }
 
-void Timer::Start()
+Timer::~Timer()
 {
-	m_start = SDL_GetPerformanceCounter();
-}
 
-void Timer::Stop()
-{
-	m_end = SDL_GetPerformanceCounter();
-}
-
-float Timer::GetElapsedMS()
-{
-	float elapsed = (float)(m_end - m_start) / (double)m_frequency;
-	elapsed *= 1000;
-	return elapsed;
 }
 
 void Timer::Reset()
 {
-	m_start = 0.0f;
-	m_end = 0.0f;
+	m_startTicks = SDL_GetTicks();
+	m_elapsedTicks = 0;
+	m_deltaTime = 0.0f;
+}
+
+float Timer::DeltaTime()
+{
+	return m_deltaTime;
+}
+
+void Timer::Update()
+{
+	m_elapsedTicks = SDL_GetTicks() - m_startTicks;
+
+	m_deltaTime = m_elapsedTicks * 0.001f;
 }

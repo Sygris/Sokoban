@@ -152,7 +152,6 @@ void Input::DestroyInput()
 	ResizeInputVectors();
 }
 
-// Has a button been pressed
 bool Input::IsControllerButtonPressed(Controllers controllerID, SDL_GameControllerButton button)
 {
 	if (controllerID < 0 || controllerID > numGamepads) return false;
@@ -160,7 +159,6 @@ bool Input::IsControllerButtonPressed(Controllers controllerID, SDL_GameControll
 	return m_controllerInputs[controllerID].buttons[button] && !m_lastControllerInputs[controllerID].buttons[button];
 }
 
-// Is a button being pressed
 bool Input::IsControllerButtonHeld(Controllers controllerID, SDL_GameControllerButton button)
 {
 	if (controllerID < 0 || controllerID > numGamepads) return false;
@@ -190,5 +188,3 @@ int Input::ProcessAxisInput(float input)
 
 	return 0;
 }
-
-

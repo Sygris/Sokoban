@@ -169,8 +169,10 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="States\PauseState.cpp" />
     <ClCompile Include="States\PlayState.cpp" />
     <ClCompile Include="States\GameState.cpp" />
@@ -187,8 +189,10 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Audio.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="States\PauseState.h" />
     <ClInclude Include="States\PlayState.h" />
     <ClInclude Include="States\GameState.h" />
