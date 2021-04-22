@@ -4,6 +4,7 @@
 #include "States/MenuState.h"
 #include "Audio.h"
 #include "Timer.h"
+#include <chrono>
 
 Application::Application()
 {
@@ -74,33 +75,12 @@ void Application::Run()
 {
 	//m_sounds->PlayMusicTrack(0, -1);
 
-	unsigned int a = SDL_GetTicks();
-	unsigned int b = SDL_GetTicks();
-
-	int fps = 0;
-	uint32_t frameCount = 0;
-
-	double delta = 0;
-
 	while (m_isRunning)
 	{
-		a = SDL_GetTicks();
-		delta = a - b;
+		Timer::GetInstance()->Tick();
 
-		if (delta >= 1000.0f / (double)m_fps)
+		if (Timer::GetInstance()->GetDeltaTime() >= (1 / m_fps))
 		{
-			b = a;
-
-			fps++;
-			frameCount += delta;
-
-			if (frameCount >= 1000.0f)
-			{
-				frameCount = 0;
-				std::cout << fps << std::endl;
-				fps = 0;
-			}
-
 			m_states.back()->HandleEvents();
 			m_states.back()->Update();
 
@@ -115,8 +95,9 @@ void Application::Run()
 			}
 
 			m_renderer->Update();
-		}
 
+			Timer::GetInstance()->CalculateFPS();
+		}
 	}
 
 	m_renderer->Destroy();

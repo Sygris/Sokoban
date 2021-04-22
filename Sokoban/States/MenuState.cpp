@@ -77,7 +77,7 @@ void MenuState::HandleEvents()
 
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_B))
 	{
-		m_application->ChangeFPS(144);
+		m_application->ChangeFPS(120);
 	}
 
 	// Maybe next time I should use Callbacks 

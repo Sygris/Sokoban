@@ -1,47 +1,37 @@
 #include "Timer.h"
-#include <SDL.h>
+#include <iostream>
 
 Timer* Timer::s_instance = nullptr;
 
-Timer* Timer::Instance()
+void Timer::Tick()
 {
-	if (nullptr == s_instance)
+	m_frameTime = std::chrono::steady_clock::now();
+
+	m_deltaTime = std::chrono::duration<float, std::milli>(m_frameTime - m_lastFrameTime).count();
+	m_deltaTime = m_deltaTime / 1000;
+}
+
+void Timer::CalculateFPS()
+{
+	m_lastFrameTime = m_frameTime;
+
+	m_currentFPS++;
+	m_elapsedTime += m_deltaTime;
+
+	if (m_elapsedTime >= 1) // If a second has pass the game will print how many FPS it has passed
+	{
+		m_elapsedTime = 0;
+		std::cout << m_currentFPS << std::endl;
+		m_currentFPS = 0;
+	}
+}
+
+Timer* Timer::GetInstance()
+{
+	if (s_instance == nullptr)
+	{
 		s_instance = new Timer();
+	}
 
 	return s_instance;
-}
-
-void Timer::Destroy()
-{
-	delete s_instance;
-	s_instance = nullptr;
-}
-
-Timer::Timer()
-{
-	Reset();
-}
-
-Timer::~Timer()
-{
-
-}
-
-void Timer::Reset()
-{
-	m_startTicks = SDL_GetTicks();
-	m_elapsedTicks = 0;
-	m_deltaTime = 0.0f;
-}
-
-float Timer::DeltaTime()
-{
-	return m_deltaTime;
-}
-
-void Timer::Update()
-{
-	m_elapsedTicks = SDL_GetTicks() - m_startTicks;
-
-	m_deltaTime = m_elapsedTicks * 0.001f;
 }

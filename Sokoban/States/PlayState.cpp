@@ -24,7 +24,7 @@ void PlayState::Init(Application* application)
 		"Assets/Spritesheet/Player.png",
 		Vector2D(256, 320),
 		Vector2D(64, 64),
-		Vector2D(64, 64),
+		Vector2D(150, 150),
 		m_application->GetInput(),
 		m_application->GetAudio(),
 		m_map,

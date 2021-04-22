@@ -1,26 +1,32 @@
 #pragma once
 
+#include <chrono>
+
 class Timer
 {
+public:
+
+	inline float GetDeltaTime() { return m_deltaTime; }
+
+	inline float GetCurrentFPS() { return m_currentFPS; }
+
+	inline double GetElapsedTime() { return m_elapsedTime; }
+
+	void Tick();
+
+	void CalculateFPS();
+
+	static Timer* GetInstance();
+
 private:
+	Timer() = default;
 
 	static Timer* s_instance;
 
-	unsigned int m_startTicks;
-	unsigned int m_elapsedTicks;
 	float m_deltaTime;
+	float m_currentFPS;
+	double m_elapsedTime;
 
-public:
-	static Timer* Instance();
-	static void Destroy();
-
-	void Reset();
-	float DeltaTime();
-
-	void Update();
-
-private:
-
-	Timer();
-	~Timer();
+	std::chrono::time_point<std::chrono::high_resolution_clock> m_frameTime;
+	std::chrono::time_point<std::chrono::high_resolution_clock> m_lastFrameTime;
 };

@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include "Map.h"
 #include "Input.h"
+#include "Timer.h"
 
 Player::Player(SDL_Renderer* renderer, const std::string& filename, Vector2D position, Vector2D size, Vector2D velocity, Input* input, Audio* audio, Map* map, int playerID)
 	: GameObject(renderer, filename, position, size), m_velocity{ velocity }, m_input{ input }, m_sounds{ audio }, m_map{ map }, m_playerID{ playerID }
@@ -15,7 +16,8 @@ Player::~Player()
 
 void Player::HandleEvents()
 {
-	if (m_input->IsControllerButtonPressed(static_cast<Controllers>(m_playerID), SDL_CONTROLLER_BUTTON_DPAD_LEFT))
+	if (m_input->IsControllerButtonPressed(static_cast<Controllers>(m_playerID), SDL_CONTROLLER_BUTTON_DPAD_LEFT) ||
+		m_input->IsControllerButtonHeld(static_cast<Controllers>(m_playerID), SDL_CONTROLLER_BUTTON_DPAD_LEFT))
 	{
 		Left();
 	}
@@ -89,7 +91,7 @@ void Player::Animate(PlayerStates state)
 #pragma region Movement Functions
 void Player::Up()
 {
-	int y = m_position.y - m_velocity.y;
+	int y = m_position.y - (m_velocity.y * Timer::GetInstance()->GetDeltaTime());
 
 	if (!m_map->IsWall(m_position.x, y) && !m_map->IsWall(m_position.x + (m_size.x - 1), y))
 	{
@@ -100,7 +102,7 @@ void Player::Up()
 
 void Player::Down()
 {
-	int y = m_position.y + m_velocity.y;
+	int y = m_position.y + (m_velocity.y * Timer::GetInstance()->GetDeltaTime());
 
 	if (!m_map->IsWall(m_position.x, y + (m_size.y - 1)) && !m_map->IsWall(m_position.x + (m_size.x - 1), y + (m_size.y - 1)))
 	{
@@ -111,7 +113,7 @@ void Player::Down()
 
 void Player::Right()
 {
-	int x = m_position.x + 4 * 17 * 000.1f;
+	float x = m_position.x + (m_velocity.x * Timer::GetInstance()->GetDeltaTime());
 
 	if (!m_map->IsWall(x + (m_size.x - 1), m_position.y) && !m_map->IsWall(x + (m_size.x - 1), m_position.y + m_size.y - 1))
 	{
@@ -122,7 +124,7 @@ void Player::Right()
 
 void Player::Left()
 {
-	int x = m_position.x - m_velocity.x;
+	int x = m_position.x - (m_velocity.x * Timer::GetInstance()->GetDeltaTime());
 
 	if (!m_map->IsWall(x, m_position.y) && !m_map->IsWall(x, m_position.y + (m_size.y - 1)))
 	{
