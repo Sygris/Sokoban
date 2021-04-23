@@ -25,6 +25,6 @@ private:
 	static PlayState s_playState;
 
 	Map* m_map{ nullptr };
-	Player* m_object{ nullptr };
+	Player* m_player{ nullptr };
 };
 

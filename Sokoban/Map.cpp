@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "TextureManager.h"
+#include "Block.h"
 #include <fstream>
 
 Map::Map(SDL_Renderer* renderer, const char* mapFilePath, const char* tilesetPath, int blockSize, float scaleSize)
@@ -38,13 +39,15 @@ void Map::LoadMap(std::string path)
 {
 	std::string line;
 	std::ifstream file(path.c_str());
-	
+
 	while (file >> line)
 	{
 		m_mapLayout.push_back(line);
 	}
 
 	file.close();
+
+	CreateBlocks();
 }
 
 void Map::Render()
@@ -64,18 +67,12 @@ void Map::Render()
 			m_srcRect.y = m_srcRect.h * 6;
 
 			TextureManager::Draw(m_tileset, m_renderer, m_srcRect, m_destRect);
-			
+
 			switch (tile)
 			{
 			case '0':
 				m_srcRect.x = m_srcRect.w * 11;
 				m_srcRect.y = m_srcRect.h * 6;
-
-				TextureManager::Draw(m_tileset, m_renderer, m_srcRect, m_destRect);
-				break;
-			case '1':
-				m_srcRect.x = m_srcRect.w * 1;
-				m_srcRect.y = m_srcRect.h * 0;
 
 				TextureManager::Draw(m_tileset, m_renderer, m_srcRect, m_destRect);
 				break;
@@ -106,4 +103,28 @@ bool Map::IsWall(int x, int y)
 		return true;
 
 	return false;
+}
+
+void Map::CreateBlocks()
+{
+	char tile{};
+
+	for (int row = 0; row < m_mapLayout.size(); row++)
+	{
+		for (int column = 0; column < m_mapLayout[0].size(); column++)
+		{
+			tile = m_mapLayout[row][column];
+
+			if (tile == '1')
+			{
+				Block* tmp = new Block(m_renderer,
+					"Assets/Blocks/brown.png",
+					Vector2D(column * m_blocksize, row * m_blocksize),
+					Vector2D(m_blocksize, m_blocksize),
+					Vector2D(0, 0),
+					this
+				);
+			}
+		}
+	}
 }

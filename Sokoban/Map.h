@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include <vector>
+#include "vector2D.h"
 #include <String>
 
 class Scroll;
@@ -19,6 +20,10 @@ public:
 	bool IsWall(int x, int y);
 
 private:
+	void GetHomePositions();
+
+	void CreateBlocks();
+private:
 	SDL_Rect m_srcRect{}, m_destRect{}, m_mapSize{};
 
 	SDL_Texture* m_tileset;
@@ -30,4 +35,5 @@ private:
 	int m_width, m_height;
 
 	std::vector<std::string> m_mapLayout;
+	std::vector<Vector2D> m_homePositions;
 };

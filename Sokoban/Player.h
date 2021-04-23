@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "BoxCollider2D.h"
 
 class Input;
 class Audio;
@@ -25,12 +26,15 @@ private:
 	void Right();
 	void Left();
 
+	bool CheckCollisionWithBlocks();
+
 private:
 	Map* m_map;
 	Input* m_input;
 	Audio* m_sounds;
 
 	Vector2D m_velocity;
+	BoxCollider2D m_boxCollider2D;
 
 	int m_playerID;
 

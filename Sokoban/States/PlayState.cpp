@@ -8,6 +8,7 @@
 #include "../Audio.h"
 
 #include "../Player.h"
+#include "../Block.h"
 
 #include "../Map.h"
 
@@ -19,7 +20,7 @@ void PlayState::Init(Application* application)
 
 	m_map = new Map(m_application->GetRenderer(), "Assets/Maps/level01.txt", "Assets/Maps/tilesheet.png", 64);
 
-	m_object = new Player(
+	m_player = new Player(
 		m_application->GetRenderer(),
 		"Assets/Spritesheet/Player.png",
 		Vector2D(256, 320),
@@ -34,6 +35,13 @@ void PlayState::Init(Application* application)
 
 void PlayState::Clean()
 {
+	for (Block* block : Block::BlockList)
+	{
+		delete block;
+	}
+
+	Block::BlockList.clear();
+
 	delete m_map;
 	m_map = nullptr;
 }
@@ -57,20 +65,32 @@ void PlayState::HandleEvents()
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_X))
 	{
 		m_application->ChangeState(MenuState::Instance());
+		return;
 	}
 
-	m_object->HandleEvents();
+	m_player->HandleEvents();
 }
 
 void PlayState::Update()
 {
-	m_object->Update();
+	m_player->Update();
+
+	for (Block* block : Block::BlockList)
+	{
+		block->Update();
+	}
 }
 
 void PlayState::Draw()
 {
 	m_map->Render();
-	m_object->Draw();
+
+	for (Block* block : Block::BlockList)
+	{
+		block->Draw();
+	}
+
+	m_player->Draw();
 }
 
 PlayState::PlayState()

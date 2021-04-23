@@ -8,7 +8,7 @@ void Timer::Tick()
 	m_frameTime = std::chrono::steady_clock::now();
 
 	m_deltaTime = std::chrono::duration<float, std::milli>(m_frameTime - m_lastFrameTime).count();
-	m_deltaTime = m_deltaTime / 1000;
+	m_deltaTime /= 1000;
 }
 
 void Timer::CalculateFPS()
@@ -18,7 +18,7 @@ void Timer::CalculateFPS()
 	m_currentFPS++;
 	m_elapsedTime += m_deltaTime;
 
-	if (m_elapsedTime >= 1) // If a second has pass the game will print how many FPS it has passed
+	if (m_elapsedTime >= 1) // If a second has pass the game will print how many FPS had passed
 	{
 		m_elapsedTime = 0;
 		m_lastFPS = m_currentFPS;

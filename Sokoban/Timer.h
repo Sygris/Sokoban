@@ -6,16 +6,16 @@ class Timer
 {
 public:
 
+	void Tick();
+
+	void CalculateFPS();
+
 	inline float GetDeltaTime() { return m_deltaTime; }
 
 	inline float GetCurrentFPS() { return m_currentFPS; }
 	inline float GetLastFPS() { return m_lastFPS; }
 
 	inline double GetElapsedTime() { return m_elapsedTime; }
-
-	void Tick();
-
-	void CalculateFPS();
 
 	static Timer* GetInstance();
 

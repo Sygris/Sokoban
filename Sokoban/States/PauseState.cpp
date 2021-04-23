@@ -12,18 +12,15 @@ void PauseState::Init(Application* application)
 
 void PauseState::Clean()
 {
-	std::cout << __FUNCTION__ << std::endl;
 	SDL_DestroyTexture(m_text);
 }
 
 void PauseState::Pause()
 {
-	std::cout << __FUNCTION__ << std::endl;
 }
 
 void PauseState::Resume()
 {
-	std::cout << __FUNCTION__ << std::endl;
 }
 
 void PauseState::HandleEvents()

@@ -103,7 +103,6 @@ void Application::Run()
 			
 			m_renderer->Update();
 		}
-
 	}
 
 	m_renderer->Destroy();
