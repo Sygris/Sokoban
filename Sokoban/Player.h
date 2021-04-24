@@ -26,7 +26,7 @@ private:
 	void Right();
 	void Left();
 
-	bool CheckCollisionWithBlocks();
+	void UpdateBoxColliders();
 
 private:
 	Map* m_map;
@@ -34,7 +34,11 @@ private:
 	Audio* m_sounds;
 
 	Vector2D m_velocity;
-	BoxCollider2D m_boxCollider2D;
+	BoxCollider2D m_colliderBody{};		// Against walls
+	BoxCollider2D m_colliderLeft{};		// Against boxes on the left
+	BoxCollider2D m_colliderRight{};	// Against boxes on the right
+	BoxCollider2D m_colliderTop{};		// Against boxes on the top
+	BoxCollider2D m_colliderDown{};		// Against boxes on the down
 
 	int m_playerID;
 

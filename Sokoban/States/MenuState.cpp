@@ -82,7 +82,7 @@ void MenuState::HandleEvents()
 
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_Y))
 	{
-		m_application->ChangeFPS(30);
+		m_application->GetAudio()->PlaySFX(0, 0, 0);
 	}
 
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_X))

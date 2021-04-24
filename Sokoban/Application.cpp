@@ -76,7 +76,7 @@ void Application::ChangeFPS(float fps)
 
 void Application::Run()
 {
-	//m_sounds->PlayMusicTrack(0, -1);
+	m_sounds->PlayMusicTrack(0, -1);
 
 	while (m_isRunning)
 	{

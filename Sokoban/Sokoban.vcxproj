@@ -171,6 +171,7 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BoxCollider2D.cpp" />
+    <ClCompile Include="CollisionHandler.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BoxCollider2D.h" />
+    <ClInclude Include="CollisionHandler.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Map.h" />

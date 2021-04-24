@@ -17,6 +17,7 @@ public:
 	void Draw();
 
 	inline Vector2D GetPosition() { return m_position; }
+	inline SDL_Rect GetRect() { return m_dstRect; }
 
 	static std::vector<Block*> BlockList;
 
