@@ -71,12 +71,35 @@ void Application::PopState()
 
 void Application::ChangeFPS(float fps)
 {
-	m_fps = fps;
+	m_currentFPS++;
+
+	if (m_currentFPS == 3)
+	{
+		m_currentFPS = 0;
+	}
+
+	switch (m_currentFPS)
+	{
+	case 0:
+		m_fps = 60;
+		break;
+	case 1:
+		m_fps = 120;
+		break;
+	case 2:
+		m_fps = 30;
+		break;
+	default:
+		break;
+	}
+	//m_fps = fps;
 }
 
 void Application::Run()
 {
-	m_sounds->PlayMusicTrack(0, -1);
+	//m_sounds->PlayMusicTrack(0, -1);
+
+	float time = 0;
 
 	while (m_isRunning)
 	{
@@ -98,9 +121,10 @@ void Application::Run()
 			}
 
 			Timer::GetInstance()->CalculateFPS();
+			time += Timer::GetInstance()->GetDeltaTime();
 
 			m_textFPS->DisplayText(std::to_string((int)Timer::GetInstance()->GetLastFPS()), 10, 0, SDL_Color{ 255, 255, 0, 255 }, m_renderer->GetRenderer());
-			
+
 			m_renderer->Update();
 		}
 	}

@@ -7,7 +7,6 @@ int main(int argc, char* argv[])
 	Application* App = new Application();
 	App->Run();
 
-
 	delete App;
 	App = nullptr;
 

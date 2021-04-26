@@ -42,6 +42,9 @@ void PlayState::Clean()
 
 	Block::BlockList.clear();
 
+	delete m_player;
+	m_player = nullptr;
+
 	delete m_map;
 	m_map = nullptr;
 }
@@ -68,6 +71,12 @@ void PlayState::HandleEvents()
 		return;
 	}
 
+	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_Y))
+	{
+		m_application->PushState(PauseState::Instance());
+		return;
+	}
+
 	m_player->HandleEvents();
 }
 
@@ -91,6 +100,14 @@ void PlayState::Draw()
 	}
 
 	m_player->Draw();
+}
+
+void PlayState::Replay()
+{
+	Application* temp = m_application;
+
+	Clean();
+	Init(temp);
 }
 
 PlayState::PlayState()

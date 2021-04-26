@@ -17,6 +17,8 @@ public:
 	void Update();
 	void Draw();
 
+	void Replay();
+
 	static PlayState* Instance() { return &s_playState; }
 
 protected:

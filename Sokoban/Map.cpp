@@ -121,7 +121,7 @@ void Map::CreateBlocks()
 					"Assets/Blocks/brown.png",
 					Vector2D(column * m_blocksize, row * m_blocksize),
 					Vector2D(m_blocksize, m_blocksize),
-					Vector2D(0, 0),
+					"brown",
 					this
 				);
 			}

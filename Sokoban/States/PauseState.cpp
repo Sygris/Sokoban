@@ -1,5 +1,6 @@
 #include "PauseState.h"
 #include "../TextureManager.h"
+#include "PlayState.h"
 
 PauseState PauseState::s_pauseState;
 
@@ -39,6 +40,7 @@ void PauseState::HandleEvents()
 			{
 			case SDLK_SPACE:
 				m_application->PopState();
+				PlayState::Instance()->Replay();
 				break;
 			default:
 				break;

@@ -172,6 +172,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BoxCollider2D.cpp" />
     <ClCompile Include="CollisionHandler.cpp" />
+    <ClCompile Include="Exit.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="BoxCollider2D.h" />
     <ClInclude Include="CollisionHandler.h" />
+    <ClInclude Include="Exit.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Map.h" />

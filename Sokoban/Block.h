@@ -7,9 +7,9 @@ class Map;
 class Block : GameObject
 {
 public:
-	Block(SDL_Renderer* renderer, const std::string& filename, Vector2D position, Vector2D size, Vector2D home, Map* map);
+	Block(SDL_Renderer* renderer, const std::string& filename, Vector2D position, Vector2D size, const std::string& color, Map* map);
 	
-	bool IsBlockHome();
+	std::string GetColour();
 
 	void Move(int x, int y);
 
@@ -22,8 +22,7 @@ public:
 	static std::vector<Block*> BlockList;
 
 private:
-	bool m_isHome{ false };
-	Vector2D m_home;
+	std::string m_colour;
 
 	Map* m_map{ nullptr };
 

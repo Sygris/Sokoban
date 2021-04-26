@@ -108,7 +108,6 @@ void Player::Animate(PlayerStates state)
 }
 #pragma endregion
 
-
 #pragma region Movement Functions
 void Player::Up()
 {
@@ -236,10 +235,13 @@ void Player::Left()
 		m_currentState = LEFT;
 	}
 }
+#pragma endregion
+
+#pragma region Colliders 
 void Player::UpdateBoxColliders()
 {
 	// Updates the Collider position to the entire visible body of the player
-	m_colliderBody.SetBox((int)(m_position.x), (int)(m_position.y), (int)(m_size.x), (int)(m_size.y)); 
+	m_colliderBody.SetBox((int)(m_position.x), (int)(m_position.y), (int)(m_size.x), (int)(m_size.y));
 	m_colliderBody.SetBuffer(-4, -4, 8, 9); // Sets the buffer (how much to subtract from the collider) of the collider 
 
 	// Updates the Collider position to the middle left of the player
@@ -248,14 +250,15 @@ void Player::UpdateBoxColliders()
 
 	// Updates the Collider position to the middle right of the player
 	m_colliderRight.SetBox((int)(m_position.x + m_size.x / 2), (int)(m_position.y + m_size.y / 4), (int)(m_size.x / 2), (int)(m_size.y / 2));
-	m_colliderRight.SetBuffer(-4, -4, 8, 9); 
+	m_colliderRight.SetBuffer(-4, -4, 8, 9);
 
 	// Updates the Collider position to the down middle of the player
-	m_colliderDown.SetBox((int)(m_position.x + m_size.x / 4), (int)(m_position.y + m_size.y / 1.3), (int)(m_size.x / 2), (int)(m_size.y / 4)); 
+	m_colliderDown.SetBox((int)(m_position.x + m_size.x / 4), (int)(m_position.y + m_size.y / 1.3), (int)(m_size.x / 2), (int)(m_size.y / 4));
 	m_colliderDown.SetBuffer(-4, -4, 8, 9);
 
 	// Updates the Collider position to the top middle of the player
-	m_colliderTop.SetBox((int)(m_position.x + m_size.x / 4), (int)(m_position.y), (int)(m_size.x / 2), (int)(m_size.y / 2));
+	m_colliderTop.SetBox((int)(m_position.x + m_size.x / 6), (int)(m_position.y), (int)(m_size.x / 1.5), (int)(m_size.y / 2));
 	m_colliderTop.SetBuffer(-4, -4, 8, 9);
 }
 #pragma endregion
+

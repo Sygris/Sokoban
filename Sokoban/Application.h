@@ -48,6 +48,7 @@ private:
 	Text* m_textFPS{ nullptr };
 
 	// TODO: Be able to change between 30, 60 and 120 FPS
+	int m_currentFPS = 0;
 #pragma endregion
 };
 

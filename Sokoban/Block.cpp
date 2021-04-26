@@ -6,17 +6,15 @@
 
 std::vector<Block*> Block::BlockList;
 
-Block::Block(SDL_Renderer* renderer, const std::string& filename, Vector2D position, Vector2D size, Vector2D home, Map* map)
-	: GameObject(renderer, filename, position, size), m_home{ home }, m_map{ map }
+Block::Block(SDL_Renderer* renderer, const std::string& filename, Vector2D position, Vector2D size, const std::string& colour, Map* map)
+	: GameObject(renderer, filename, position, size), m_colour{ colour }, m_map{ map }
 {
-	m_isHome = false;
-
 	BlockList.push_back(this);
 }
 
-bool Block::IsBlockHome()
+std::string Block::GetColour()
 {
-	return m_isHome;
+	return m_colour;
 }
 
 void Block::Move(int x, int y)
@@ -41,11 +39,6 @@ void Block::Move(int x, int y)
 
 void Block::Update()
 {
-	if ((int)m_position.x == (int)m_home.x && (int)m_position.y == (int)m_home.y)
-	{
-		m_isHome = true;
-	}
-
 	m_dstRect.x = (int)m_position.x;
 	m_dstRect.y = (int)m_position.y;
 }
