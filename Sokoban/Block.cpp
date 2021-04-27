@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Timer.h"
 #include "CollisionHandler.h"
+#include "TextureManager.h"
 
 std::vector<Block*> Block::BlockList;
 
@@ -45,7 +46,14 @@ void Block::Update()
 
 void Block::Draw()
 {
-	SDL_RenderCopy(m_renderer, m_texture, &m_srcRect, &m_dstRect);
+	TextureManager::Draw(m_texture, m_renderer, m_srcRect, m_dstRect);
+}
+
+void Block::SnapToExit(Vector2D position)
+{
+	m_position = position;
+	m_dstRect.x = (int)m_position.x;
+	m_dstRect.y = (int)m_position.y;
 }
 
 void Block::Up(float velocity)

@@ -1,5 +1,9 @@
 #pragma once
+
 #include "GameState.h"
+#include "../UI/Button.h"
+
+
 class PauseState : public GameState
 {
 public:
@@ -21,5 +25,12 @@ private:
 	static PauseState s_pauseState;
 
 	SDL_Texture* m_text{ nullptr };
+
+	enum PauseMenuButtons { HOME, REPLAY, CONTINUE, TOTAL };
+	
+	int m_currentButton = 0;
+	std::vector<Button*> m_buttons;
+
+	void ChangeSelection(int change);
 };
 

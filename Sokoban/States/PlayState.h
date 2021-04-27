@@ -17,7 +17,7 @@ public:
 	void Update();
 	void Draw();
 
-	void Replay();
+	void Replay(Application* application) override;
 
 	static PlayState* Instance() { return &s_playState; }
 

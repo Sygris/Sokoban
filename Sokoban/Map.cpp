@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "Block.h"
 #include <fstream>
+#include "Exit.h"
 
 Map::Map(SDL_Renderer* renderer, const char* mapFilePath, const char* tilesetPath, int blockSize, float scaleSize)
 	: m_renderer{ renderer }, m_blocksize{ blockSize }, m_scaleBlocksize{ scaleSize }
@@ -48,6 +49,7 @@ void Map::LoadMap(std::string path)
 	file.close();
 
 	CreateBlocks();
+	GetHomePositions();
 }
 
 void Map::Render()
@@ -73,12 +75,6 @@ void Map::Render()
 			case '0':
 				m_srcRect.x = m_srcRect.w * 11;
 				m_srcRect.y = m_srcRect.h * 6;
-
-				TextureManager::Draw(m_tileset, m_renderer, m_srcRect, m_destRect);
-				break;
-			case '2':
-				m_srcRect.x = m_srcRect.w * 12;
-				m_srcRect.y = m_srcRect.h * 1;
 
 				TextureManager::Draw(m_tileset, m_renderer, m_srcRect, m_destRect);
 				break;
@@ -123,6 +119,48 @@ void Map::CreateBlocks()
 					Vector2D(m_blocksize, m_blocksize),
 					"brown",
 					this
+				);
+			}
+			else if (tile == '3')
+			{
+				Block* tmp = new Block(m_renderer,
+					"Assets/Blocks/blue.png",
+					Vector2D(column * m_blocksize, row * m_blocksize),
+					Vector2D(m_blocksize, m_blocksize),
+					"blue",
+					this
+				);
+			}
+		}
+	}
+}
+
+void Map::GetHomePositions()
+{
+	char tile{};
+
+	for (int row = 0; row < m_mapLayout.size(); row++)
+	{
+		for (int column = 0; column < m_mapLayout[0].size(); column++)
+		{
+			tile = m_mapLayout[row][column];
+
+			if (tile == '2')
+			{
+				Exit* tmp = new Exit(m_renderer,
+					"Assets/Exits/brown.png",
+					Vector2D(column * m_blocksize, row * m_blocksize),
+					Vector2D(m_blocksize, m_blocksize),
+					"brown"
+				);
+			}
+			else if (tile == '4')
+			{
+				Exit* tmp = new Exit(m_renderer,
+					"Assets/Exits/blue.png",
+					Vector2D(column * m_blocksize, row * m_blocksize),
+					Vector2D(m_blocksize, m_blocksize),
+					"blue"
 				);
 			}
 		}

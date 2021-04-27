@@ -19,13 +19,15 @@ public:
 	~Application();
 
 	void ChangeState(GameState* state);
+	void RestartState(GameState* state);
+	void GoToMenuState(GameState* state);
 	void PushState(GameState* state);
 	void PopState();
 
 	void Run();
 	void Destroy();
 
-	void ChangeFPS(float fps);
+	void ChangeFPS();
 
 	inline Input* GetInput() { return m_input; }
 	inline Audio* GetAudio() { return m_sounds; }
@@ -43,12 +45,12 @@ private:
 	Audio* m_sounds;
 
 #pragma region Timer
-	float m_fps{ 60.0f };
+	float m_fps{ SIXTY };
 
 	Text* m_textFPS{ nullptr };
 
-	// TODO: Be able to change between 30, 60 and 120 FPS
-	int m_currentFPS = 0;
+	int m_currentFPS = 0; // Keeps the current fps selection (toggle fps)
+	enum FPS {THIRTY = 30, SIXTY = 60, HUNDREDTWENTY = 120, TotalOfFPS = 3};
 #pragma endregion
 };
 

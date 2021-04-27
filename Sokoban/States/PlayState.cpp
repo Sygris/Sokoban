@@ -11,6 +11,8 @@
 #include "../Block.h"
 
 #include "../Map.h"
+#include "../Exit.h"
+#include "../CollisionHandler.h"
 
 PlayState PlayState::s_playState;
 
@@ -23,7 +25,7 @@ void PlayState::Init(Application* application)
 	m_player = new Player(
 		m_application->GetRenderer(),
 		"Assets/Spritesheet/Player.png",
-		Vector2D(256, 320),
+		Vector2D(256, 250),
 		Vector2D(64, 64),
 		Vector2D(150, 150),
 		m_application->GetInput(),
@@ -42,6 +44,13 @@ void PlayState::Clean()
 
 	Block::BlockList.clear();
 
+	for (Exit* exit : Exit::ExitList)
+	{
+		delete exit;
+	}
+
+	Exit::ExitList.clear();
+
 	delete m_player;
 	m_player = nullptr;
 
@@ -51,12 +60,10 @@ void PlayState::Clean()
 
 void PlayState::Pause()
 {
-	std::cout << __FUNCTION__ << std::endl;
 }
 
 void PlayState::Resume()
 {
-	std::cout << __FUNCTION__ << std::endl;
 }
 
 void PlayState::HandleEvents()
@@ -64,12 +71,6 @@ void PlayState::HandleEvents()
 	m_application->GetInput()->Update();
 
 	if (!m_application->GetInput()->IsControllerInitialised()) return;
-
-	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_X))
-	{
-		m_application->ChangeState(MenuState::Instance());
-		return;
-	}
 
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_Y))
 	{
@@ -82,11 +83,24 @@ void PlayState::HandleEvents()
 
 void PlayState::Update()
 {
+	if (Exit::ExitList.empty())
+	{
+		m_application->ChangeState(MenuState::Instance());
+		return;
+	}
+
 	m_player->Update();
 
 	for (Block* block : Block::BlockList)
 	{
+		if (block->IsHome()) continue;
+
 		block->Update();
+	}
+
+	for (Exit* exit : Exit::ExitList)
+	{
+		exit->Update();
 	}
 }
 
@@ -99,15 +113,18 @@ void PlayState::Draw()
 		block->Draw();
 	}
 
+	for (Exit* exit : Exit::ExitList)
+	{
+		exit->Draw();
+	}
+
 	m_player->Draw();
 }
 
-void PlayState::Replay()
+void PlayState::Replay(Application* application)
 {
-	Application* temp = m_application;
-
 	Clean();
-	Init(temp);
+	Init(application);
 }
 
 PlayState::PlayState()

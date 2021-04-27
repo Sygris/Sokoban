@@ -1,9 +1,12 @@
 #include "Application.h"
 #include "Renderer.h"
 #include "Input.h"
-#include "States/MenuState.h"
 #include "Audio.h"
 #include "Timer.h"
+
+#include "Util/MessageHandler.h"
+
+#include "States/MenuState.h"
 
 #include "UI/Text.h"
 
@@ -55,25 +58,63 @@ void Application::PushState(GameState* state)
 	m_states.back()->Init(this);
 }
 
+void Application::RestartState(GameState* state)
+{
+	// Clears the entire vector
+	if (!m_states.empty())
+	{
+		for (GameState* state : m_states)
+		{
+			state->Clean();
+		}
+
+		m_states.clear();
+	}
+
+	// Stores the state and initialise it
+	m_states.push_back(state);
+	m_states.back()->Replay(this);
+}
+
+void Application::GoToMenuState(GameState* state)
+{
+	// Clears the entire vector
+	if (!m_states.empty())
+	{
+		for (GameState* state : m_states)
+		{
+			state->Clean();
+		}
+
+		m_states.clear();
+	}
+
+	// Stores the state and initialise it
+	m_states.push_back(state);
+	m_states.back()->Init(this);
+}
+
 void Application::PopState()
 {
 	// cleanup the current state
-	if (!m_states.empty()) {
+	if (!m_states.empty())
+	{
 		m_states.back()->Clean();
 		m_states.pop_back();
 	}
 
 	// resume previous state
-	if (!m_states.empty()) {
+	if (!m_states.empty())
+	{
 		m_states.back()->Resume();
 	}
 }
 
-void Application::ChangeFPS(float fps)
+void Application::ChangeFPS()
 {
 	m_currentFPS++;
 
-	if (m_currentFPS == 3)
+	if (m_currentFPS == TotalOfFPS)
 	{
 		m_currentFPS = 0;
 	}
@@ -81,18 +122,17 @@ void Application::ChangeFPS(float fps)
 	switch (m_currentFPS)
 	{
 	case 0:
-		m_fps = 60;
+		m_fps = SIXTY;
 		break;
 	case 1:
-		m_fps = 120;
+		m_fps = THIRTY;
 		break;
 	case 2:
-		m_fps = 30;
+		m_fps = HUNDREDTWENTY;
 		break;
 	default:
 		break;
 	}
-	//m_fps = fps;
 }
 
 void Application::Run()
@@ -100,6 +140,21 @@ void Application::Run()
 	//m_sounds->PlayMusicTrack(0, -1);
 
 	float time = 0;
+
+#pragma region Controller Warning
+	MessageHandler* messageHandler = new MessageHandler();
+
+	m_input->Update();
+
+	while (!m_input->IsControllerInitialised())
+	{
+		m_input->Update();
+
+		messageHandler->ShowMessage(CONTROLLER_WARNING);
+	}
+
+	delete messageHandler;
+#pragma endregion
 
 	while (m_isRunning)
 	{
@@ -121,7 +176,6 @@ void Application::Run()
 			}
 
 			Timer::GetInstance()->CalculateFPS();
-			time += Timer::GetInstance()->GetDeltaTime();
 
 			m_textFPS->DisplayText(std::to_string((int)Timer::GetInstance()->GetLastFPS()), 10, 0, SDL_Color{ 255, 255, 0, 255 }, m_renderer->GetRenderer());
 

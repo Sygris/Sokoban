@@ -13,5 +13,7 @@ public:
 
 private:
 	std::string m_colour;
+
+	void RemoveFromList();
 };
 

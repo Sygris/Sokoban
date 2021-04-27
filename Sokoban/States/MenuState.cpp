@@ -27,8 +27,8 @@ void MenuState::Init(Application* application)
 	m_buttons.push_back(new Button(m_application->GetRenderer(), 380, 250, 200, 80, "Assets/UI/Play.png"));
 	m_buttons[PLAY]->AddTexture("Assets/UI/PlayHover.png");
 
-	m_buttons.push_back(new Button(m_application->GetRenderer(), 380, 350, 200, 80, "Assets/UI/Options.png"));
-	m_buttons[OPTIONS]->AddTexture("Assets/UI/OptionsHover.png");
+	m_buttons.push_back(new Button(m_application->GetRenderer(), 380, 350, 200, 80, "Assets/UI/Instructions.png"));
+	m_buttons[OPTIONS]->AddTexture("Assets/UI/InstructionsHover.png");
 
 	m_buttons.push_back(new Button(m_application->GetRenderer(), 380, 450, 200, 80, "Assets/UI/Exit.png"));
 	m_buttons[EXIT]->AddTexture("Assets/UI/ExitHover.png");
@@ -51,12 +51,10 @@ void MenuState::Clean()
 
 void MenuState::Pause()
 {
-	std::cout << __FUNCTION__ << std::endl;
 }
 
 void MenuState::Resume()
 {
-	std::cout << __FUNCTION__ << std::endl;
 }
 
 void MenuState::HandleEvents()
@@ -77,7 +75,7 @@ void MenuState::HandleEvents()
 
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_B))
 	{
-		m_application->ChangeFPS(120);
+		m_application->ChangeFPS();
 	}
 
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_Y))
@@ -112,7 +110,7 @@ void MenuState::Update()
 
 void MenuState::Draw()
 {
-	SDL_RenderCopy(m_application->GetRenderer(), m_background, NULL, NULL);
+	TextureManager::Draw(m_background, m_application->GetRenderer(), SDL_Rect{}, SDL_Rect{ 0, 0, 960, 720 });
 
 	for (auto button : m_buttons)
 	{
