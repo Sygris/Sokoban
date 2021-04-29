@@ -17,8 +17,10 @@ public:
 	void Update();
 	void Draw();
 
+	inline void IsWonMenu(bool wonMenu) { m_isWonMenu = wonMenu; }
+	void Setup(std::string file, bool wonMenu);
+	
 	static PauseState* Instance() { return &s_pauseState; }
-
 protected:
 	PauseState();
 private:
@@ -26,11 +28,12 @@ private:
 
 	SDL_Texture* m_text{ nullptr };
 
-	enum PauseMenuButtons { HOME, REPLAY, CONTINUE, TOTAL };
-	
+	bool m_isWonMenu{false};
+
 	int m_currentButton = 0;
 	std::vector<Button*> m_buttons;
 
 	void ChangeSelection(int change);
+	enum PauseMenuButtons { HOME, REPLAY, TOTAL };
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.h"
+#include "../Util/MessageHandler.h"
 
 class Map;
 class Player;
@@ -18,6 +19,7 @@ public:
 	void Draw();
 
 	void Replay(Application* application) override;
+	void Setup(std::string file);
 
 	static PlayState* Instance() { return &s_playState; }
 
@@ -27,6 +29,11 @@ private:
 	static PlayState s_playState;
 
 	Map* m_map{ nullptr };
-	Player* m_player{ nullptr };
+	std::string m_currentMapFilePath;
+
+	void CreatePlayers();
+	std::vector<Player*> m_players;
+
+	MessageHandler* messageHandler{nullptr};
 };
 

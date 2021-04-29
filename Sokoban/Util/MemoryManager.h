@@ -14,8 +14,9 @@ inline void* operator new(size_t size, const char* filename, int line)
 
 	void* ptr = new char[size];
 
+	std::cout << "Size: " << size << " bytes." << " Filename: " << filename << " line: " + line << std::endl;
+	
 	std::string debug = "Size: " + std::to_string(size) + " bytes." + " Filename: " + filename + " line: " + std::to_string(line);
-
 	Logger::GetLogger()->Log(debug);
 
 	return ptr;
@@ -27,8 +28,9 @@ inline void* operator new[](size_t size, const char* filename, int line)
 
 	void* ptr = new char[size];
 
-	std::string debug = "Size: " + std::to_string(size) + " bytes." + " Filename: " + filename + " line: " + std::to_string(line);
+	std::cout << "Size: " << size << " bytes." << " Filename: " << filename << " line: " + line << std::endl;
 
+	std::string debug = "Size: " + std::to_string(size) + " bytes." + " Filename: " + filename + " line: " + std::to_string(line);
 	Logger::GetLogger()->Log(debug);
 
 	return ptr;

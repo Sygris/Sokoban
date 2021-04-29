@@ -20,19 +20,7 @@ void PlayState::Init(Application* application)
 {
 	m_application = application;
 
-	m_map = new Map(m_application->GetRenderer(), "Assets/Maps/level01.txt", "Assets/Maps/tilesheet.png", 64);
-
-	m_player = new Player(
-		m_application->GetRenderer(),
-		"Assets/Spritesheet/Player.png",
-		Vector2D(256, 250),
-		Vector2D(64, 64),
-		Vector2D(150, 150),
-		m_application->GetInput(),
-		m_application->GetAudio(),
-		m_map,
-		PLAYER1
-	);
+	messageHandler = new MessageHandler();
 }
 
 void PlayState::Clean()
@@ -51,8 +39,12 @@ void PlayState::Clean()
 
 	Exit::ExitList.clear();
 
-	delete m_player;
-	m_player = nullptr;
+	for (Player* player : m_players)
+	{
+		delete player;
+	}
+
+	m_players.clear();
 
 	delete m_map;
 	m_map = nullptr;
@@ -70,6 +62,13 @@ void PlayState::HandleEvents()
 {
 	m_application->GetInput()->Update();
 
+	while (m_application->GetInput()->GetNumOfConnectedControllers() < m_players.size())
+	{
+		m_application->GetInput()->Update();
+
+		messageHandler->ShowMessage(CONTROLLER_WARNING);
+	}
+
 	if (!m_application->GetInput()->IsControllerInitialised()) return;
 
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_Y))
@@ -78,18 +77,25 @@ void PlayState::HandleEvents()
 		return;
 	}
 
-	m_player->HandleEvents();
+	for (Player* player : m_players)
+	{
+		player->HandleEvents();
+	}
 }
 
 void PlayState::Update()
 {
 	if (Exit::ExitList.empty())
 	{
-		m_application->ChangeState(MenuState::Instance());
+		m_application->PushState(PauseState::Instance());
+		PauseState::Instance()->Setup("Assets/UI/WonMenu.png", true); // It setups the pause menu to be a WonMenu (I will do it differently if I had more time)
 		return;
 	}
 
-	m_player->Update();
+	for (Player* player : m_players)
+	{
+		player->Update();
+	}
 
 	for (Block* block : Block::BlockList)
 	{
@@ -118,15 +124,40 @@ void PlayState::Draw()
 		exit->Draw();
 	}
 
-	m_player->Draw();
+	for (Player* player : m_players)
+	{
+		player->Draw();
+	}
 }
 
 void PlayState::Replay(Application* application)
 {
 	Clean();
 	Init(application);
+	Setup(m_currentMapFilePath);
+}
+
+void PlayState::Setup(std::string file)
+{
+	delete m_map;
+	m_map = new Map(m_application->GetRenderer(), file.c_str(), "Assets/Maps/tilesheet.png", 64);
+	m_currentMapFilePath = file;
+	
+	CreatePlayers();
 }
 
 PlayState::PlayState()
 {
+}
+
+void PlayState::CreatePlayers()
+{
+	std::vector<Vector2D> positions = m_map->GetPlayersPositions();
+
+	for (int i = 0; i < positions.size(); i++)
+	{
+		std::string playerSprite = "Assets/Spritesheet/Player" + std::to_string(i) + ".png";
+
+		m_players.push_back(new Player(m_application->GetRenderer(), playerSprite, positions[i], Vector2D(64, 64), Vector2D(150, 150), m_application->GetInput(), m_application->GetAudio(), m_map, i));
+	}
 }

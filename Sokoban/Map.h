@@ -19,10 +19,12 @@ public:
 
 	bool IsWall(int x, int y);
 
-private:
-	void GetHomePositions();
+	inline std::vector<Vector2D> GetPlayersPositions() { return m_playerStartPosition; }
 
+private:
 	void CreateBlocks();
+	void CreatePlayerStarPositions();
+	void CreateHome();
 private:
 	SDL_Rect m_srcRect{}, m_destRect{}, m_mapSize{};
 
@@ -35,5 +37,5 @@ private:
 	int m_width, m_height;
 
 	std::vector<std::string> m_mapLayout;
-	std::vector<Vector2D> m_homePositions;
+	std::vector<Vector2D> m_playerStartPosition;
 };

@@ -42,8 +42,6 @@ void Input::Update()
 		switch (m_event.type) {
 		case SDL_CONTROLLERDEVICEADDED:
 			// TODO: Maybe limit how many controllers the game register
-			std::cout << "Device has been connected" << std::endl;
-
 			if (SDL_IsGameController(m_event.cdevice.which))
 			{
 				AddController(m_event.cdevice.which);
@@ -51,7 +49,6 @@ void Input::Update()
 
 			break;
 		case SDL_CONTROLLERDEVICEREMOVED:
-			std::cout << "Device has been removed" << std::endl;
 			RemoveController(m_event.cdevice.which);
 			break;
 		case SDL_CONTROLLERBUTTONDOWN:
@@ -102,7 +99,11 @@ void Input::AddController(int deviceID)
 {
 	SDL_GameController* pad = SDL_GameControllerOpen(deviceID);
 
+#if _DEBUG
+	std::cout << "Device has been connected" << std::endl;
+
 	std::cout << SDL_GameControllerName(pad) << std::endl;
+#endif // _DEBUG
 
 	if (SDL_GameControllerGetAttached(pad) == 1)
 	{
@@ -128,17 +129,23 @@ void Input::RemoveController(int deviceID)
 			SDL_GameControllerClose(m_connectedControllers[i]);
 
 			m_connectedControllers.erase(m_connectedControllers.begin() + i);
+
+
+			numGamepads--;
+
+#if _DEBUG
+			std::cout << "Device has been removed" << std::endl;
+#endif // _DEBUG
+
+			ResizeInputVectors();
+
+			if (numGamepads == 0)
+			{
+				m_isControllerInitialised = false;
+			}
 		}
 	}
 
-	numGamepads--;
-
-	ResizeInputVectors();
-
-	if (numGamepads == 0)
-	{
-		m_isControllerInitialised = false;
-	}
 }
 
 void Input::DestroyInput()
@@ -154,7 +161,7 @@ void Input::DestroyInput()
 
 bool Input::IsControllerButtonPressed(Controllers controllerID, SDL_GameControllerButton button)
 {
-	if (controllerID < 0 || controllerID > numGamepads) return false;
+	if (controllerID < 0 || controllerID >= numGamepads) return false;
 
 	return m_controllerInputs[controllerID].buttons[button] && !m_lastControllerInputs[controllerID].buttons[button];
 }

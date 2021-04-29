@@ -4,7 +4,7 @@
 
 class Button;
 
-enum MainMenuButtons { PLAY, OPTIONS, EXIT, TOTAL };
+enum MainMenuButtons { PLAY, MULTIPLAYER, EXIT, TOTAL };
 
 class MenuState : public GameState
 {

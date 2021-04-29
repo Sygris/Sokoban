@@ -34,7 +34,7 @@ private:
 		SDL_MESSAGEBOX_INFORMATION,
 		NULL,
 		"Controller instructions",
-		"Instructions - TODO",
+		"Use the DPAD to move\nPress A to select\nPress Y to open the pause menu\nPress B to toggle the FPS between 30, 60 and 120FPS",
 		1,
 		&button,
 		NULL

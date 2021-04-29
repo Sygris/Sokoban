@@ -18,9 +18,9 @@ Application::Application()
 	m_input = new Input();
 
 	m_sounds = new Audio();
-	m_sounds->LoadAudio("Assets/Audio/music/allegro.mp3", 0, MUSIC, 20);
-	m_sounds->LoadAudio("Assets/Audio/music/jingle2ch128kbps.mp3", 1, MUSIC, 20);
-	m_sounds->LoadAudio("Assets/Audio/sfx/prefix.wav", 0, SFX, 5);
+	m_sounds->LoadAudio("Assets/Audio/music/mainsong.mp3", 0, MUSIC, 5);
+	m_sounds->LoadAudio("Assets/Audio/sfx/win.mp3", 0, SFX, 5);
+	m_sounds->LoadAudio("Assets/Audio/sfx/button.mp3", 1, SFX, 10);
 
 	m_textFPS = new Text("Assets/UI/font.ttf", 25);
 
@@ -137,9 +137,7 @@ void Application::ChangeFPS()
 
 void Application::Run()
 {
-	//m_sounds->PlayMusicTrack(0, -1);
-
-	float time = 0;
+	m_sounds->PlayMusicTrack(0, -1);
 
 #pragma region Controller Warning
 	MessageHandler* messageHandler = new MessageHandler();
@@ -152,8 +150,10 @@ void Application::Run()
 
 		messageHandler->ShowMessage(CONTROLLER_WARNING);
 	}
+#pragma endregion
 
-	delete messageHandler;
+#pragma region Instructions
+	messageHandler->ShowMessage(INSTRUCTIONS);
 #pragma endregion
 
 	while (m_isRunning)
@@ -183,6 +183,7 @@ void Application::Run()
 		}
 	}
 
+	delete messageHandler;
 	m_renderer->Destroy();
 	Destroy();
 }

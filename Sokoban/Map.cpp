@@ -49,7 +49,8 @@ void Map::LoadMap(std::string path)
 	file.close();
 
 	CreateBlocks();
-	GetHomePositions();
+	CreateHome();
+	CreatePlayerStarPositions();
 }
 
 void Map::Render()
@@ -135,7 +136,25 @@ void Map::CreateBlocks()
 	}
 }
 
-void Map::GetHomePositions()
+void Map::CreatePlayerStarPositions()
+{
+	char tile{};
+
+	for (int row = 0; row < m_mapLayout.size(); row++)
+	{
+		for (int column = 0; column < m_mapLayout[0].size(); column++)
+		{
+			tile = m_mapLayout[row][column];
+
+			if (tile == 'P')
+			{
+				m_playerStartPosition.push_back(Vector2D(column * m_blocksize, row * m_blocksize));
+			}
+		}
+	}
+}
+
+void Map::CreateHome()
 {
 	char tile{};
 

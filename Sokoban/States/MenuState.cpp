@@ -27,8 +27,8 @@ void MenuState::Init(Application* application)
 	m_buttons.push_back(new Button(m_application->GetRenderer(), 380, 250, 200, 80, "Assets/UI/Play.png"));
 	m_buttons[PLAY]->AddTexture("Assets/UI/PlayHover.png");
 
-	m_buttons.push_back(new Button(m_application->GetRenderer(), 380, 350, 200, 80, "Assets/UI/Instructions.png"));
-	m_buttons[OPTIONS]->AddTexture("Assets/UI/InstructionsHover.png");
+	m_buttons.push_back(new Button(m_application->GetRenderer(), 380, 350, 200, 80, "Assets/UI/multiplayer.png"));
+	m_buttons[MULTIPLAYER]->AddTexture("Assets/UI/multiplayerHover.png");
 
 	m_buttons.push_back(new Button(m_application->GetRenderer(), 380, 450, 200, 80, "Assets/UI/Exit.png"));
 	m_buttons[EXIT]->AddTexture("Assets/UI/ExitHover.png");
@@ -47,6 +47,8 @@ void MenuState::Clean()
 	}
 
 	m_buttons.clear();
+
+	m_currentButton = 0;
 }
 
 void MenuState::Pause()
@@ -91,9 +93,11 @@ void MenuState::HandleEvents()
 		{
 		case PLAY:
 			m_application->ChangeState(PlayState::Instance());
+			PlayState::Instance()->Setup("Assets/Maps/level01.txt");
 			break;
-		case OPTIONS:
-			m_application->PushState(PauseState::Instance());
+		case MULTIPLAYER:
+			m_application->PushState(PlayState::Instance());
+			PlayState::Instance()->Setup("Assets/Maps/level01Multiplayer.txt");
 			break;
 		case EXIT:
 			m_application->Quit();
@@ -134,4 +138,5 @@ void MenuState::ChangeSelection(int change)
 	}
 
 	m_buttons[m_currentButton]->SetSelected(true); // Set the current button hovered
+	m_application->GetAudio()->PlaySFX(1, 0, 0);
 }
