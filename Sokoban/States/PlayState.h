@@ -1,6 +1,7 @@
 #pragma once
 #include "GameState.h"
 #include "../Util/MessageHandler.h"
+#include <string>
 
 class Map;
 class Player;
