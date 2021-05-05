@@ -18,11 +18,6 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
-	void ChangeState(Application* application, GameState* state)
-	{
-		application->ChangeState(state);
-	}
-
 protected:
 	GameState() {};
 

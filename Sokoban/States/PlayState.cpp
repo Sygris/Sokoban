@@ -71,6 +71,11 @@ void PlayState::HandleEvents()
 
 	if (!m_application->GetInput()->IsControllerInitialised()) return;
 
+	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_B))
+	{
+		m_application->ChangeFPS();
+	}
+
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_Y))
 	{
 		m_application->PushState(PauseState::Instance());

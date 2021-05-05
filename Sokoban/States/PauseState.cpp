@@ -36,6 +36,7 @@ void PauseState::Clean()
 	m_buttons.clear();
 
 	m_currentButton = 0; // Resets the button selection to the menu option
+	m_isWonMenu = false;
 }
 
 void PauseState::Pause()
@@ -66,6 +67,7 @@ void PauseState::HandleEvents()
 	if (m_application->GetInput()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_Y) && !m_isWonMenu)
 	{
 		m_application->PopState();
+		return;
 	}
 
 	// Maybe next time I should use Callbacks 

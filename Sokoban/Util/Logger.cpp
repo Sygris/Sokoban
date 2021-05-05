@@ -8,7 +8,7 @@ std::ofstream Logger::m_Logfile;
 
 Logger::Logger()
 {
-	m_Logfile.open("MemoryUsage.log", std::fstream::trunc);
+	m_Logfile.open("MemoryUsage.txt", std::fstream::trunc);
 }
 
 Logger* Logger::GetLogger() {

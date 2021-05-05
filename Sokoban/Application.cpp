@@ -165,15 +165,8 @@ void Application::Run()
 			m_states.back()->HandleEvents();
 			m_states.back()->Update();
 
-			if (m_states.size() > 1)
-			{
-				for (GameState* state : m_states)
-					state->Draw();
-			}
-			else
-			{
-				m_states.back()->Draw();
-			}
+			for (GameState* state : m_states)
+				state->Draw();
 
 			Timer::GetInstance()->CalculateFPS();
 

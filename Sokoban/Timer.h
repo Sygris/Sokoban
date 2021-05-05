@@ -12,7 +12,6 @@ public:
 
 	inline float GetDeltaTime() { return m_deltaTime; }
 
-	inline float GetCurrentFPS() { return m_currentFPS; }
 	inline float GetLastFPS() { return m_lastFPS; }
 
 	inline double GetElapsedTime() { return m_elapsedTime; }
